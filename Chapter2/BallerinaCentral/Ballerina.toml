@@ -1,0 +1,9 @@
+[project]
+org-name= "dhanushka"
+version= "0.1.3"
+license = ["Apache-2.0"]
+authors = ["Dhanushka Madushan"]
+keywords = ["ballerina", "order", "invoice"]
+repository = "https://github.com/madushadhanushka/invoice_util"
+
+[dependencies]

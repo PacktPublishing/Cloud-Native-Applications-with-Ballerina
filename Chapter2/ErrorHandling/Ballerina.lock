@@ -1,0 +1,9 @@
+org_name = "dhanushka"
+version = "0.1.0"
+lockfile_version = "1.0.0"
+ballerina_version = "slp4"
+
+[[imports."dhanushka/user_defined_error_types:0.1.0"]]
+org_name = "ballerina"
+name = "stringutils"
+version = "0.5.0"

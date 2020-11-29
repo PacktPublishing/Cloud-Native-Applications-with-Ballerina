@@ -1,0 +1,89 @@
+org_name = "dhanushka"
+version = "0.1.0"
+lockfile_version = "1.0.0"
+ballerina_version = "slp4"
+
+[[imports."ballerinax/rabbitmq:1.0.3"]]
+org_name = "ballerina"
+name = "system"
+version = "0.6.0"
+
+[[imports."ballerinax/rabbitmq:1.0.3"]]
+org_name = "ballerina"
+name = "crypto"
+version = "1.0.0"
+
+[[imports."ballerina/system:0.6.0"]]
+org_name = "ballerina"
+name = "io"
+version = "0.5.0"
+
+[[imports."dhanushka/orchestrator_handler:0.1.0"]]
+org_name = "ballerina"
+name = "io"
+version = "0.5.0"
+
+[[imports."dhanushka/orchestrator_handler:0.1.0"]]
+org_name = "ballerinax"
+name = "rabbitmq"
+version = "1.0.3"
+
+[[imports."ballerina/java.jdbc:0.5.0"]]
+org_name = "ballerina"
+name = "sql"
+version = "0.5.0"
+
+[[imports."ballerina/crypto:1.0.0"]]
+org_name = "ballerina"
+name = "time"
+version = "1.0.1"
+
+[[imports."ballerina/sql:0.5.0"]]
+org_name = "ballerina"
+name = "config"
+version = "1.0.0"
+
+[[imports."ballerina/sql:0.5.0"]]
+org_name = "ballerina"
+name = "io"
+version = "0.5.0"
+
+[[imports."ballerina/sql:0.5.0"]]
+org_name = "ballerina"
+name = "time"
+version = "1.0.1"
+
+[[imports."dhanushka/order_api:0.1.0"]]
+org_name = "ballerina"
+name = "io"
+version = "0.5.0"
+
+[[imports."dhanushka/order_api:0.1.0"]]
+org_name = "ballerina"
+name = "sql"
+version = "0.5.0"
+
+[[imports."dhanushka/order_api:0.1.0"]]
+org_name = "ballerina"
+name = "java.jdbc"
+version = "0.5.0"
+
+[[imports."dhanushka/order_api:0.1.0"]]
+org_name = "ballerinax"
+name = "rabbitmq"
+version = "1.0.3"
+
+[[imports."dhanushka/order_api:0.1.0"]]
+org_name = "dhanushka"
+name = "orchestrator_handler"
+version = "0.1.0"
+
+[[imports."ballerina/config:1.0.0"]]
+org_name = "ballerina"
+name = "stringutils"
+version = "0.5.0"
+
+[[imports."ballerina/config:1.0.0"]]
+org_name = "ballerina"
+name = "system"
+version = "0.6.0"

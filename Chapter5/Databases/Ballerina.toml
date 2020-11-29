@@ -1,0 +1,23 @@
+[project]
+org-name= "dhanushka"
+version= "0.1.0"
+
+[build-options]
+observability-included=true
+
+[platform]
+target = "java8"
+
+[[platform.libraries]]
+artafactId = "mysql-connector-java"
+version = "8.0.19"
+path = "/Users/dhanushka/Desktop/mysql-connector-java-8.0.19.jar"
+groupId = "mysql"
+modules = ["mysql_basic", "mysql_query", "mysql_record_query", "mysql_batch_execution", "monolithic_oms", "oms_server"]
+
+[[platform.libraries]]
+artafactId = "snowflake-jdbc"
+version = "3.9.2"
+path = "/Users/dhanushka/Downloads/snowflake-jdbc-3.9.2.jar"
+groupId = "net.snowflake"
+modules = ["snowflake_jdbc"]
