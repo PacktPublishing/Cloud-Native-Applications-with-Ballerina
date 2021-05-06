@@ -1,6 +1,0 @@
-[project]
-org-name= "dhanushka"
-version= "0.1.0"
-
-[dependencies]
-"wso2/scim2" = "0.10.0"
