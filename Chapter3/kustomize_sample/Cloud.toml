@@ -1,0 +1,4 @@
+[container.image]
+repository="dhanushka"
+name="kustomize_sample"
+tag="v0.1.0"

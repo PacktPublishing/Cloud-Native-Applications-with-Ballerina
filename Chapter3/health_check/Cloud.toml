@@ -1,0 +1,12 @@
+[container.image]
+repository="dhanushka"
+name="health_check"
+tag="v0.1.0"
+
+[cloud.deployment.probes.readiness]
+port = 9090
+path = "/hello/readiness_check"
+
+[cloud.deployment.probes.liveness]
+port = 9090
+path = "/hello/liveness_check"

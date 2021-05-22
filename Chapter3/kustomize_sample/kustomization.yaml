@@ -1,0 +1,4 @@
+resources:
+- target/kubernetes/kustomize_sample/kustomize_sample.yaml
+patchesStrategicMerge:
+- resources/deployment.yaml

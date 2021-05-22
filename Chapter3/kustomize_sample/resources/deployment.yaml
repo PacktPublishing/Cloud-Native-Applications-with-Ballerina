@@ -1,0 +1,11 @@
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  labels:
+    app: "kustomize_sample"
+  name: "kustomize-sampl"
+spec:
+  type: NodePort
+  ports:
+    - port: 9090
+      nodePort: 32269

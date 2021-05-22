@@ -1,0 +1,16 @@
+[container.image]
+repository="dhanushka"
+name="resource_utilization"
+tag="v0.1.0"
+
+[cloud.deployment]
+min_memory="100Mi"
+min_cpu="1000m"
+max_memory="256Mi"
+max_cpu="1500m"
+
+[cloud.deployment.autoscaling]
+min_replicas=2
+max_replicas=6
+cpu=60
+memory=80

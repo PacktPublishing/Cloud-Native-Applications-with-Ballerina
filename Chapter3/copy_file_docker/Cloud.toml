@@ -1,0 +1,8 @@
+[container.image]
+repository="dhanushka"
+name="copy_file"
+tag="v0.1.0"
+
+[[container.copy.files]]
+sourceFile="index.html"
+target="/home/ballerina/index.html"
