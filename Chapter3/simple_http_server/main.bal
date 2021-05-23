@@ -10,14 +10,15 @@ service /hello on new http:Listener(9090) {
     
     // curl -X GET http://localhost:9090/hello
     resource function get .(http:Caller caller, http:Request req) returns error? { 
-        check caller->respond("root context of hello service"); 
+        check caller->respond("Root context of hello service"); 
     }
 
     // curl -X GET http://localhost:9090/hello/customer/customer_details
     resource function get customer/customer_details(http:Caller caller, http:Request req) returns error? { 
-        check caller->respond("root context of customer details"); 
+        check caller->respond("Customer details"); 
     }
 
+    // Passing data to HTTP resources as URL paramters
     // curl -X GET http://localhost:9090/hello/order/3ac327e9a8b9  
     resource function get 'order/[string orderId] (http:Caller caller, http:Request req) returns error? {  
         check caller->respond("Order ID: " + orderId);  
@@ -28,6 +29,7 @@ service /hello on new http:Listener(9090) {
         check caller->respond("Order item ID: " + orderItemId + " in " + orderId);  
     }
 
+    // Passing data to HTTP resources as query paramters
     // curl -X GET 'http://localhost:9090/hello/orderQueryParam?orderId=324c324a2&customerId=433a23324'
     resource function get orderQueryParam (http:Caller caller, http:Request req) returns error? {
         string? orderId = req.getQueryParamValue("orderId");
@@ -37,13 +39,14 @@ service /hello on new http:Listener(9090) {
         }  
     }
     
+    // Passing structured data to HTTP resources
     // curl -X POST http://localhost:9090/hello/createOrderJson -d '{"hello": "world"}'
     resource function post createOrderJson(http:Caller caller, http:Request req, @http:Payload {} json message) returns error? { 
         io:println(message);
         check caller->respond(message); 
     }
 
-    // curl -X POST http://localhost:9090/hello/createOrderXml -d '<hello>world</hello>'
+    // curl -X POST http://localhost:9090/hello/createOrderXml -H 'content-type: application/xml' -d '<hello>world</hello>'
     @http:ResourceConfig {
         consumes: ["application/xml"]
     }
@@ -60,23 +63,8 @@ service /hello on new http:Listener(9090) {
         io:println(message);
         check caller->respond(message); 
     }
-    
-    // The following two resource functions are used to read matrix parameters
-    resource function get orderMatrixParam (http:Caller caller, http:Request req) returns error? {
-        map<any> pathMParams = req.getMatrixParams("/hello/orderMatrixParam");
-        var orderId = <string>pathMParams["orderId"];
-        var customerId = <string>pathMParams["customerId"];
-        check caller->respond("Order ID: " + <@untainted>orderId + " customer ID: " + <@untainted>customerId);
-    }
-       
-    resource function get orderMatrixParamMiddle/test (http:Caller caller, http:Request req) returns error? {
-        map<any> pathMParams = req.getMatrixParams("/hello/orderMatrixParamMiddle");
-        var orderId = <string>pathMParams["orderId"];
-        var customerId = <string>pathMParams["customerId"];
-        map<any> testpathMParams = req.getMatrixParams("/hello/orderMatrixParamMiddle/test");
-        var testorderId = <string>testpathMParams["orderId"];
-        var testcustomerId = <string>testpathMParams["customerId"];
-        check caller->respond("Order ID: " + <@untainted>orderId + " customer ID: " + <@untainted>customerId + "Order ID test: " + <@untainted>testorderId + " customer ID test: " + <@untainted>testcustomerId);
-    }
-
 } 
+type CreateOrder record {|
+    string customerId;
+    string shippingAddress;
+|};

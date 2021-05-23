@@ -1,6 +1,6 @@
 // This sample demostrate merging two YAML files with Kustomize tool.
 // Build the sample with `bal build --cloud=k8s kustomize_sample/`
-// Execute `kustomize build` inside the project home directory.
+// Execute `kustomize build kustomize_sample/`.
 // This will output the updated Kubernetes artifacts
 import ballerina/http;
 service /hello on new http:Listener(9090) { 

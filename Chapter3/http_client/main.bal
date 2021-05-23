@@ -5,7 +5,7 @@ import ballerina/io;
 import ballerina/http;
 
 public function main() returns error?{
-    http:Client clientEndpoint = check new ("https://showcase.api.linx.twenty57.net");
+    http:Client clientEndpoint = check new ("http://showcase.api.linx.twenty57.net");
     var response = clientEndpoint->get("/UnixTime/tounix?date=now");
     if (response is http:Response) {
         var msg = response.getJsonPayload();

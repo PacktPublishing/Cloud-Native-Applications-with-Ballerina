@@ -4,6 +4,7 @@
 // Test the endpoint with `curl -X GET http://localhost:9090/hello/sayHello`
 
 // ----Kubernetes sample---
+// Use `eval $(minikube docker-env)` to change to minikube environment
 // Build this sample with `bal build --cloud=k8s code_to_cloud/` command
 // Execute with `kubectl apply -f <project_home>/target/kubernetes/code_to_cloud`.
 // Replace `<project_home>` with the project home location
