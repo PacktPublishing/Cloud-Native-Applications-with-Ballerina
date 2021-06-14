@@ -18,7 +18,7 @@ function varType() {
 const float PI = 3.141592;
 function constants() {
     float radius = 10;
-    float circumference = 2 * PI * radius; 
+    float circumference = 2.0 * PI * radius; 
     io:println("Circuferent is " + circumference.toString());
 }
 
@@ -44,4 +44,4 @@ function letExpressions() {
 
 function getFive() returns int { 
     return 5; 
-} 
+}

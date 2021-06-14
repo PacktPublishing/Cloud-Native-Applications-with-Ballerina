@@ -22,4 +22,3 @@ public function main() returns error? {
     };
     io:println(user.getUserDetails()); 
 }
-

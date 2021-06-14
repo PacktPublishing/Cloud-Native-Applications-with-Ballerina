@@ -60,7 +60,7 @@ function whileLoopWithBreak() {
 public type Product record {
     string productName; 
     int quantity; 
-    int unitPrice; 
+    float unitPrice; 
 }; 
 function foreachLoop() {
     table<Product> products = table [
