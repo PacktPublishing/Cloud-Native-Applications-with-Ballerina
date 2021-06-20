@@ -1,4 +1,5 @@
 // This sample demostrate the readiness and liveness check of the Kubernetes deployment.
+// Use `eval $(minikube docker-env)` to change to minikube environment
 // Build with `bal build --cloud=k8s health_check/` command.
 // Execute `kubectl apply -f <project_home>/target/kubernetes/health_check` command.
 // Execute `kubectl get deployments`.
@@ -15,7 +16,7 @@ service /hello on new http:Listener(9090) {
     }
     resource function get readiness_check(http:Caller caller, http:Request req) returns @tainted error? {
         http:Client clientEndpoint = check new ("http://localhost:9091");
-        any response = check clientEndpoint->get("/backend/health_check");
+        string response = check clientEndpoint->get("/backend/health_check");
         check caller->respond("pong"); 
     }
 }

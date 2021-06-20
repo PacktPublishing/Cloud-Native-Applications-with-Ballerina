@@ -5,28 +5,11 @@ import ballerina/io;
 import ballerina/http;
 
 public function main() returns error?{
+    
     http:Client clientEndpoint = check new ("http://showcase.api.linx.twenty57.net");
-    var response = clientEndpoint->get("/UnixTime/tounix?date=now");
-    if (response is http:Response) {
-        var msg = response.getJsonPayload();
-        if (msg is json) {
-            io:println("Response is: " + msg.toString());
-        } else {
-            return error("Invalid payload received:");
-        }
-    } else {
-        return error("Error when calling the backend: ");
-    }
+    json msg = check clientEndpoint->get("/UnixTime/tounix?date=now");
+    io:println("Response is: " + msg.toString());
 
-    var response2 = clientEndpoint->post("/UnixTime/fromunixtimestamp", {"UnixTimeStamp": "1589772280", "Timezone": ""});
-    if (response2 is http:Response) {
-        var msg2 = response2.getJsonPayload();
-        if (msg2 is json) {
-            io:println("Response is: " + msg2.toString());
-        } else {
-            return error("Invalid payload received:");
-        }
-    } else {
-        return error("Error when calling the backend: ");
-    }
+    json msg2 = check clientEndpoint->post("/UnixTime/fromunixtimestamp", {"UnixTimeStamp": "1589772280", "Timezone": ""});
+    io:println("Response is: " + msg2.toString());
 }

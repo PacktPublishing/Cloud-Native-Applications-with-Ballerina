@@ -13,16 +13,7 @@ public function main() returns error?{
 public client class StadardTimeClient {
     remote function getCurrentTime() returns string|error{
         http:Client clientEndpoint = check new ("http://showcase.api.linx.twenty57.net");
-        var response = clientEndpoint->get("/UnixTime/tounix?date=now");
-        if (response is http:Response) {
-            var msg = response.getTextPayload();
-            if (msg is string) {
-                return <@untainted> msg;
-            } else {
-                return error("Invalid payload received:");
-            }
-        } else {
-            return error("Error when calling the backend: ");
-        }
+        string msg = check clientEndpoint->get("/UnixTime/tounix?date=now");
+        return msg;
     }
 }
