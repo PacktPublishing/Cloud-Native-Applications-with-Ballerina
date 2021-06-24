@@ -1,0 +1,20 @@
+[2021-06-23 23:55:52,955] SEVERE {b7a.log.crash} - ballerinax/rabbitmq/1_1_0-beta_1/$ConfigurationMapper 
+java.lang.NoClassDefFoundError: ballerinax/rabbitmq/1_1_0-beta_1/$ConfigurationMapper
+	at dhanushka.rabbitmq_producer.0_1_0.$ConfigurationMapper.$configureInit(Unknown Source)
+	at dhanushka.rabbitmq_producer.0_1_0.$_init.main(rabbitmq_producer)
+Caused by: java.lang.ClassNotFoundException: ballerinax.rabbitmq.1_1_0-beta_1.$ConfigurationMapper
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:581)
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:178)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:522)
+	... 2 more
+ 
+[2021-06-24 00:01:01,880] SEVERE {b7a.log.crash} - ballerinax/rabbitmq/1_1_0-beta_1/$ConfigurationMapper 
+java.lang.NoClassDefFoundError: ballerinax/rabbitmq/1_1_0-beta_1/$ConfigurationMapper
+	at dhanushka.rabbitmq_producer.0_1_0.$ConfigurationMapper.$configureInit(Unknown Source)
+	at dhanushka.rabbitmq_producer.0_1_0.$_init.main(rabbitmq_producer)
+Caused by: java.lang.ClassNotFoundException: ballerinax.rabbitmq.1_1_0-beta_1.$ConfigurationMapper
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:581)
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:178)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:522)
+	... 2 more
+ 
