@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: "consul_backend"
+  name: "consul-backend-deployment"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "consul_backend"
+  template:
+    metadata:
+      annotations: 
+       'consul.hashicorp.com/connect-inject': 'true'

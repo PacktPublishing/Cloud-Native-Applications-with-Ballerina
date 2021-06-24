@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>
+            Ballerina form submit sample
+        </title>
+    </head>
+    <body>
+        <form action = "http://localhost:9090/form" method="POST">
+            <div>Name: <input name = "name" type = "text"/></div>
+            <div>Email: <input name = "email" type = "email"/></div>
+            <div>Birthday: <input name = "birthday" type = "date"/></div>
+            <div>Gender: <select name = "gender">
+                <option value = "male">Male</option>
+                <option value = "female">Female</option>
+            </select></div>
+            <input type = "submit" value="Submit"/>
+        </form>
+    </body>
+</html>

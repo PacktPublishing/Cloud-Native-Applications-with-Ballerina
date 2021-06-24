@@ -1,0 +1,16 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  labels:
+    app: "consul_caller_service"
+  name: "consul-caller-s-deployment"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "consul_caller_service"
+  template:
+    metadata:
+      annotations: 
+       'consul.hashicorp.com/connect-inject': 'true'
+       'consul.hashicorp.com/connect-service-upstreams': 'consul-backend:9091'

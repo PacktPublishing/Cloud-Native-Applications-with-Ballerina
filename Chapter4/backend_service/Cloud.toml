@@ -1,0 +1,4 @@
+[container.image]
+repository="dhanushka"
+name="backend_service"
+tag="v0.1.0"
