@@ -1,6 +1,6 @@
 [package]
 org = "dhanushka"
-name = "order_delivery_az"
+name = "order_validation_az"
 version = "0.1.0"
 
 [build-options]

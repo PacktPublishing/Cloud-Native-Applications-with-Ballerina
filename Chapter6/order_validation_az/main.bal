@@ -1,3 +1,11 @@
+// create resource group on Azure portal. ex: BallerinaGroup
+// create a function app on Azure portal. ex: ballerinaapp
+// Create three queues named order-queue, order-success-queue, order-fail-queue
+// Build the project with `bal build order_validation_az/`
+// Deploy the function with following command
+// `az functionapp deployment source config-zip -g BallerinaGroup -n ballerinaapp --src order_validation_az/target/bin/azure-functions.zip`
+// Invoke with curl command `curl https://ballerinaapp.azurewebsites.net/api/submitOrder?orderId=343232`
+
 import ballerinax/azure_functions as af;
 import ballerina/email;
 type Order record {|
@@ -12,7 +20,7 @@ OrderTable orders = table [{
     totalPrice: 50
 }];
 
-const maxCreditLimit = 300;
+const maxCreditLimit = 300.0;
 @af:Function
 public function submitOrder(af:Context ctx, 
             @af:HTTPTrigger { authLevel: "anonymous" } af:HTTPRequest req, 
@@ -24,10 +32,9 @@ public function submitOrder(af:Context ctx,
 
 @af:Function
 public function validateOrder(af:Context ctx, 
-        @af:QueueTrigger { queueName: "order-queue" } string inMsg,
+        @af:QueueTrigger { queueName: "order-queue" } string inputMessage,
         @af:QueueOutput { queueName: "order-success-queue" } af:StringOutputBinding outSuccessMsg,
         @af:QueueOutput { queueName: "order-fail-queue" } af:StringOutputBinding outFailedMsg) {
-            string inputMessage = inMsg.substring(1, inMsg.length() - 1);
             Order orderItem = orders.get(inputMessage);
             if (orderItem.totalPrice > maxCreditLimit) {
                 outFailedMsg.value = inputMessage;
@@ -37,20 +44,18 @@ public function validateOrder(af:Context ctx,
 }
 @af:Function
 public function validateOrderSuccess(af:Context ctx, 
-        @af:QueueTrigger { queueName: "order-success-queue" } string inMsg) returns error?{
-    ctx.log("In Message: " + inMsg);
+        @af:QueueTrigger { queueName: "order-success-queue" } string inputMessage) returns error?{
+    ctx.log("In Message: " + inputMessage);
     ctx.log("Metadata: " + ctx.metadata.toString());
-    string inputMessage = inMsg.substring(1, inMsg.length() - 1);
     Order orderItem = orders.get(inputMessage);
     check sendEmail(orderItem.customerEmail, "Order validation success", "Order validation successful for order ID: " + orderItem.orderId);
 }
 
 @af:Function
 public function validateOrderFail(af:Context ctx, 
-        @af:QueueTrigger { queueName: "order-fail-queue" } string inMsg) returns error?{
-    ctx.log("In Message: " + inMsg);
+        @af:QueueTrigger { queueName: "order-fail-queue" } string inputMessage) returns error?{
+    ctx.log("In Message: " + inputMessage);
     ctx.log("Metadata: " + ctx.metadata.toString());
-    string inputMessage = inMsg.substring(1, inMsg.length() - 1);
      Order orderItem = orders.get(inputMessage);
     check sendEmail(orderItem.customerEmail, "Order validation failed", "Order validation failed for the order ID: " + orderItem.orderId);
 }
@@ -64,5 +69,5 @@ function sendEmail(string to, string subject, string body) returns error?{
         body: body,
         'from: "mymail@mail.com"
     };
-    check smtpClient->sendEmailMessage(email);
+    check smtpClient->sendMessage(email);
 }
