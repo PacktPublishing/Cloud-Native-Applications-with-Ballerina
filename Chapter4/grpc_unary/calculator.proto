@@ -1,0 +1,10 @@
+syntax = "proto3";
+import "google/protobuf/wrappers.proto";
+service OrderCalculate {
+	rpc calculateAsStream (stream OrderItem) returns (stream google.protobuf.FloatValue);
+	rpc calculateOneByOne (OrderItem) returns (google.protobuf.FloatValue);
+}
+message OrderItem {
+	string itemId = 1;
+	int64 quantity = 2;
+}
