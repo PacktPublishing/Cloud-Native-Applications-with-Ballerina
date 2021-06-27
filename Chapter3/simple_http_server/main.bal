@@ -44,6 +44,15 @@ service /hello on new http:Listener(9090) {
             check caller->respond("Order ID: " + orderId + " customer ID: " + customerId);
         }  
     }
+
+    // Passing data to HTTP resources as query paramters
+    // curl -X GET 'http://localhost:9090/hello/orderQueryParam2?orderId=324c324a2&customerId=433a23324'
+    // Response: Order ID: 324c324a2 customer ID: 433a23324
+    resource function get orderQueryParam2 (http:Caller caller, http:Request req, string orderId, string customerId) returns error? {
+        if orderId is string && customerId is string{
+            check caller->respond("Order ID: " + orderId + " customer ID: " + customerId);
+        }  
+    }
     
     // Passing structured data to HTTP resources
     // curl -X POST http://localhost:9090/hello/createOrderJson -d '{"hello": "world"}'
