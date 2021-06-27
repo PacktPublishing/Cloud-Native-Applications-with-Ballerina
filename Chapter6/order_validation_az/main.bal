@@ -27,7 +27,7 @@ public function submitOrder(af:Context ctx,
             @af:QueueOutput { queueName: "order-queue" } af:StringOutputBinding msg) 
             returns @af:HTTPOutput af:HTTPBinding {
     msg.value = req.query.get("orderId");
-    return { statusCode: 200, payload: "Submited successfully" };
+    return { statusCode: 200, payload: "Submitted successfully" };
 }
 
 @af:Function
@@ -67,7 +67,7 @@ function sendEmail(string to, string subject, string body) returns error?{
         to: [to],
         subject: subject,
         body: body,
-        'from: "mymail@mail.com"
+        'from: "madushandhanushka@gmail.com"
     };
     check smtpClient->sendMessage(email);
 }
