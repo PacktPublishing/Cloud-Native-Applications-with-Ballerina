@@ -1,7 +1,13 @@
+// Build the project with `bal build order_delivery_aws/` command
+// `aws lambda create-function --function-name sendDeliveryRequestMail --zip-file fileb://order_delivery_aws/target/bin/aws-ballerina-lambda-functions.zip --handler order_delivery_aws.sendDeliveryRequestMail --runtime provided --role $LAMBDA_ROLE_ARN --layers arn:aws:lambda:us-west-1:134633749276:layer:ballerina-jre11:6 --memory-size 512 --timeout 10 --region us-west-1`
+// `aws lambda update-function-code --function-name sendDeliveryRequestMail --zip-file fileb://order_delivery_aws/target/bin/aws-ballerina-lambda-functions.zip --region us-west-1`
+
+// `aws lambda create-function --function-name sendDeliveryConfirmMail --zip-file fileb://order_delivery_aws/target/bin/aws-ballerina-lambda-functions.zip --handler order_delivery_aws.sendDeliveryConfirmMail --runtime provided --role $LAMBDA_ROLE_ARN --layers arn:aws:lambda:us-west-1:134633749276:layer:ballerina-jre11:6 --memory-size 512 --timeout 10 --region us-west-1`
+// `aws lambda update-function-code --function-name sendDeliveryConfirmMail --zip-file fileb://order_delivery_aws/target/bin/aws-ballerina-lambda-functions.zip --region us-west-1`
+// invoke with `https://xxxx.execute-api.us-west-1.amazonaws.com/staging/startdeliveryprocess?orderId=43234234`
 import ballerinax/awslambda;
-//import ballerina/io;
 import ballerina/email;
-import ballerina/encoding;
+import ballerina/url;
 
 type Order record{|
     readonly string orderId;
@@ -22,7 +28,7 @@ OrderTable orders = table [{
 public function sendDeliveryRequestMail(awslambda:Context ctx, json item) returns json|error {
     string orderId = <string> check item.req.orderId;
     string taskToken = <string> check item.taskToken;
-    string encodedTaskToken = check encoding:encodeUriComponent(taskToken, "UTF-8");
+    string encodedTaskToken = check url:encode(taskToken, "UTF-8");
     Order orderToSend = orders.get(orderId);
     string deliveryAddress = orderToSend.inventoryEmail;
     string mailToSend = string `New order received with ID ${orderToSend.orderId} to address ${orderToSend.address}
@@ -51,5 +57,5 @@ function sendEmail(string to, string subject, string body) returns error?{
         body: body,
         'from: "mymail@mail.com"
     };
-    check smtpClient->sendEmailMessage(email);
+    check smtpClient->sendMessage(email);
 }

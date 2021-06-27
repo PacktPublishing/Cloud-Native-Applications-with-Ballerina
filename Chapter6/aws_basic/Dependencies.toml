@@ -1,0 +1,6 @@
+[[dependency]]
+org = "ballerinax"
+name = "awslambda"
+version = "1.0.0"
+
+

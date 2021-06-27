@@ -1,8 +1,20 @@
+// Build the project with `bal build aws_basic/` command
+// Create lambda function with the following AWS command
+// `aws lambda create-function --function-name totalPrice --zip-file fileb://aws_basic/target/bin/aws-ballerina-lambda-functions.zip --handler aws_basic.totalPrice --runtime provided --role $LAMBDA_ROLE_ARN --layers arn:aws:lambda:$us-west-1:134633749276:layer:ballerina-jre11:6 --memory-size 512 --timeout 10`
+// If lambda function already exist, use the following command to redeploy it
+// `aws lambda update-function-code --function-name totalPrice --zip-file fileb://aws_basic/target/bin/aws-ballerina-lambda-functions.zip --region us-west-1`
+// Invoke the lambda function with the following command
+// aws lambda invoke --function-name totalPrice --payload '{"itemId": "item1", "quantity": 5}' response.json --region us-west-1 --cli-binary-format raw-in-base64-out 
 import ballerinax/awslambda;
 import ballerina/io;
 @awslambda:Function
 public function totalPrice(awslambda:Context ctx, OrderItem item) returns json|error {
-   return { "totalRes" : itemList[item.itemId].price * item.quantity};
+    InventoryItem? inventoryItem = itemList[item.itemId];
+    if (inventoryItem is InventoryItem) {
+        return { "totalRes" : inventoryItem.price * <float>item.quantity};
+    } else {
+        return error("Error while retrieving table data");
+    }
 }
 @awslambda:Function
 public function setPrice(awslambda:Context ctx, OrderItem item) returns json|error {
@@ -10,7 +22,12 @@ public function setPrice(awslambda:Context ctx, OrderItem item) returns json|err
 }
 @awslambda:Function
 public function calculatePrice(awslambda:Context ctx, OrderItem item) returns json|error {
-   return { "total" : itemList[item.itemId].price * item.quantity};
+    InventoryItem? inventoryItem = itemList[item.itemId];
+    if (inventoryItem is InventoryItem) {
+        return { "total" : inventoryItem.price * <float>item.quantity};
+    } else {
+        return error("Error while retrieving table data");
+    }
 }
 
 @awslambda:Function
