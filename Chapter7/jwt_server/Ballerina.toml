@@ -1,0 +1,7 @@
+[package]
+org = "dhanushka"
+name = "jwt_server"
+version = "0.1.0"
+
+[build-options]
+observabilityIncluded = true

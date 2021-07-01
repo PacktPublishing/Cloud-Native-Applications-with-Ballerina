@@ -16,20 +16,20 @@ objectClass: organizationalUnit
 objectClass: top
 ou: Groups
 
-dn: uid=admin,ou=Users,dc=ballerina,dc=io
-objectClass: organizationalPerson
-objectClass: person
-objectClass: extensibleObject
-objectClass: uidObject
-objectClass: inetOrgPerson
-objectClass: top
-cn: Admin User
-givenName: admin
-sn: Admin
-uid: admin
-mail: admin@mail.com
-ou: Users
-userpassword: admin
+dn: uid=delivery,ou=Users,dc=ballerina,dc=io 
+objectClass: organizationalPerson 
+objectClass: person 
+objectClass: extensibleObject 
+objectClass: uidObject 
+objectClass: inetOrgPerson 
+objectClass: top 
+cn: Delivery User 
+givenName: delivery 
+sn: Delivery 
+uid: delivery 
+mail: delivery@mail.com 
+ou: Users 
+userpassword: delivery 
 
 dn: uid=customer,ou=Users,dc=ballerina,dc=io
 objectClass: organizationalPerson
@@ -46,15 +46,15 @@ mail: customer@email.io
 ou: Users
 userpassword: customer
 
-dn: cn=admin,ou=Groups,dc=ballerina,dc=io
-objectClass: groupOfNames
-objectClass: top
-cn: admin
-member: uid=admin,ou=Users,dc=ballerina,dc=io
+dn: cn=delivery,ou=Groups,dc=ballerina,dc=io 
+objectClass: groupOfNames 
+objectClass: top 
+cn: delivery 
+member: uid=delivery,ou=Users,dc=ballerina,dc=io 
 
-dn: cn=customer,ou=Groups,dc=ballerina,dc=io
-objectClass: groupOfNames
-objectClass: top
-cn: customer
-member: uid=admin,ou=Users,dc=ballerina,dc=io
-member: uid=customer,ou=Users,dc=ballerina,dc=io
+dn: cn=customer,ou=Groups,dc=ballerina,dc=io 
+objectClass: groupOfNames 
+objectClass: top 
+cn: customer 
+member: uid=delivery,ou=Users,dc=ballerina,dc=io 
+member: uid=customer,ou=Users,dc=ballerina,dc=io 

@@ -37,12 +37,12 @@ service /oms on securedEP {
         auth: [
         {
             ldapUserStoreConfig: ldapAuthProviderConfig,
-            scopes: ["admin"]
+            scopes: ["delivery"]
         }
         ]
     }
-    resource function get adminAccess() returns string {
-        return "Hello, World!";
+    resource function get deliveryAccess() returns string {
+        return "Hello, Delivery!";
     }
 
     @http:ResourceConfig {
@@ -54,7 +54,7 @@ service /oms on securedEP {
         ]
     }
     resource function get customerAccess() returns string {
-        return "Hello, World!";
+        return "Hello, Customer!";
     }
     
 }
