@@ -1,0 +1,13 @@
+[package]
+org = "dhanushka"
+name = "mysql_basic"
+version = "0.1.0"
+
+[build-options]
+observabilityIncluded = true
+
+[[platform.java11.dependency]]
+artafactId = "mysql-connector-java"
+version = "8.0.19"
+path = "/Users/dhanushka/Desktop/libs/mysql-connector-java-8.0.19.jar"
+groupId = "mysql"

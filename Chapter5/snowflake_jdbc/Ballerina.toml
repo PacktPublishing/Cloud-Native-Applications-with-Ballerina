@@ -1,0 +1,8 @@
+[build-options]
+observabilityIncluded = true
+
+[[platform.java11.dependency]]
+artafactId = "snowflake-jdbc"
+version = "3.9.2"
+path = "/Users/dhanushka/Downloads/snowflake-jdbc-3.9.2.jar"
+groupId = "net.snowflake"

@@ -39,17 +39,17 @@ function simpleDataTypes() {
     io:println("Hello World!");
 
     // float
-    float value_float = 2.5; 
+    float valueFloat = 2.5; 
 
     // decimal
-    decimal value_decimal = 5.3; 
+    decimal valueDecimal = 5.3; 
 
     // arrays
-    int[5] value_array = [2,3,4,5,1];
-    io:println(value_array[2]); 
+    int[5] valueArray = [2,3,4,5,1];
+    io:println(valueArray[2]); 
 
     // Tuple
-    [int, string] value_tuple = [3, "Hello"]; 
+    [int, string] valueTuple = [3, "Hello"]; 
 
     // Maps
     map<string> user = {  
@@ -57,9 +57,20 @@ function simpleDataTypes() {
         address: "New York"  
     }; 
     io:println(user["name"]);  // Print name key from the map of users
+
+    // Records
+    record {   
+        string name;   
+        int age;   
+        boolean married; 
+    } userRecord = {
+        name: "Tom",
+        age: 21,
+        married: false
+    };
 }
 
-// Records
+// Record type
 type User record {   
     string name;   
     int age;   
@@ -165,8 +176,8 @@ function tables() {
 //--- String
 function strings() {
     // Define and accessing string
-    string value_string = "Hello"; 
-    io:println("First character is " + value_string[0]); 
+    string valueString = "Hello"; 
+    io:println("First character is " + valueString[0]); 
 
     // String templates
     string firstName = "Tom";  
@@ -177,16 +188,16 @@ function strings() {
 
 //--- XML data type
 function xmlType() {
-    xml value_xml = xml `<user> 
+    xml valueXml = xml `<user> 
         <name>Tom</name> 
         <age>45</age> 
         </user>`;
-    io:println("XML value is " + value_xml.toString());
+    io:println("XML value is " + valueXml.toString());
 }
 
 //--- Error type
 function errorType() {
-    error value_error = error("Error name"); 
+    error valueError = error("Error name"); 
 }
 
 //--- Functions
@@ -196,7 +207,7 @@ function sum(int a, int b) returns int {
 
 //--- Future type
 function futureType() {
-    future<int> future_type = start sum(5, 6); 
+    future<int> futureType = start sum(5, 6); 
 }
 
 //--- Stream type
