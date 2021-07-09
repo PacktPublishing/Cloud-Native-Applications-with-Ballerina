@@ -1,0 +1,23 @@
+---
+openapi: 3.0.1
+info:
+  title: Hello service
+  version: 1.0.0
+servers:
+  - url: http://localhost:9091/hello
+x-wso2-basePath: /hello
+paths:
+  /sayHello:
+    get:
+      operationId: operation1_get_sayHello
+      x-wso2-request-interceptor: interceptRequest
+      x-wso2-response-interceptor: interceptResponse
+      responses:
+        '200':    # status code
+          description: Hello world
+          content:
+            application/json:
+              schema: 
+                example: Ok
+components: {}
+x-original-swagger-version: "2.0"
