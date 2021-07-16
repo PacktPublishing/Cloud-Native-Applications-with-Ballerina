@@ -4,7 +4,7 @@
 // Execute `minikube service hashicorp-consul-ui` to access the Consul UI and list caller service and backend service.
 // Execute `kubectl get services` to get list of services
 // Execute `minikube service --url <service_name>` to get service endpoint
-// Inovke the endpoint from browser. ex: http://127.0.0.1:53054/hello/sayHello
+// Inovke the endpoint from browser. ex: http://127.0.0.1:53054/caller/sayHello
 
 import ballerina/http;
 
