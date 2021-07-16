@@ -20,7 +20,7 @@ service /chat on new websocket:Listener(9091) {
     clientName = name;
     return service object websocket:Service {
         remote function onOpen(websocket:Caller caller) {
-            clientConnectionMap[caller.getConnectionId()] = <@untainted>caller;
+            clientConnectionMap[caller.getConnectionId()] = caller;
             caller.setAttribute(NAME, clientName);
             broadcastMessage(caller.getAttribute(NAME).toString() + " join the conversation");
         }

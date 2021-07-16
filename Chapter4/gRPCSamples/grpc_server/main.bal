@@ -1,7 +1,7 @@
 // Generate calculator_pb.bal with `bal grpc --input calculator.proto  --output .` command
 // Copy calculator_pb.bal file into both grpc_client and grpc_server directories
-// Start the server with `bal run grpc_unary/grpc_server/` command
-// Start the client with `bal run grpc_unary/grpc_client/` command
+// Start the server with `bal run grpc_server/` command
+// Start the client with `bal run grpc_client/` command
 import ballerina/grpc;
 import ballerina/io;
 
@@ -41,7 +41,7 @@ type InventoryItem record {|
     float price;
 |};
 type InventoryItemTable table<InventoryItem> key(itemId);
-InventoryItemTable itemList = table [
+final readonly & InventoryItemTable itemList = table [
     {
         itemId: "item1",
         price: 120

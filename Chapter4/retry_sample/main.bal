@@ -1,3 +1,5 @@
+// Run this sample with `bal run retry_sample/` command.
+
 import ballerina/io;
 import ballerina/http;
 

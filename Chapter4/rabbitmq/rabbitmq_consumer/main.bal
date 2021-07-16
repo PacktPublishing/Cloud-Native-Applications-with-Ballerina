@@ -1,5 +1,7 @@
 // Go to RabbitMQ home and start RabbitMQ with `./sbin/rabbitmq-server` command
 // Use `brew services start rabbitmq` for HomeBrew
+// Start consumer with `bal run rabbitmq/rabbitmq_consumer/`
+// Start producer with `bal run rabbitmq/rabbitmq_producer/`
 import ballerina/io;
 import ballerinax/rabbitmq;
 listener rabbitmq:Listener channelListener = new(rabbitmq:DEFAULT_HOST, rabbitmq:DEFAULT_PORT);

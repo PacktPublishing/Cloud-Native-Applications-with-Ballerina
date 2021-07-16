@@ -1,5 +1,5 @@
 // This example demostrate load balance between services and handle failover
-// Run this sample with `bal run failover_sample/` command.
+// Run this sample with `bal run load_balance_sample/` command.
 // Invoke service with `curl -X GET http://localhost:9090/loadBalance` command.
 
 import ballerina/http;

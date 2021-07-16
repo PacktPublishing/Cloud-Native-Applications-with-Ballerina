@@ -1,3 +1,5 @@
+// Run this sample with `bal run timeout_sample/` command.
+
 import ballerina/io;
 import ballerina/http;
 public function main() returns error?{

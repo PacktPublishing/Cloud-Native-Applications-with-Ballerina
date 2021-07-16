@@ -36,7 +36,7 @@ public type Product record {
     float price;
 
 };
-Inventory[] inventory = [{
+final readonly & Inventory[] inventory = [{
     name: "Tom's wears",
     inventoryId: "25234234",
     inventoryItems: [{
