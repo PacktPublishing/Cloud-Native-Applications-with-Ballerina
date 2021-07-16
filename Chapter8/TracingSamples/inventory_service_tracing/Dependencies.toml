@@ -1,0 +1,11 @@
+[[dependency]]
+org = "ballerinax"
+name = "jaeger"
+version = "0.2.3"
+
+[[dependency]]
+org = "ballerina"
+name = "observe"
+version = "0.9.0"
+
+

@@ -1,0 +1,7 @@
+[ballerina.observe]
+metricsEnabled=true
+metricsReporter="prometheus"
+
+[ballerinax.prometheus]
+port=9797
+host="0.0.0.0"
