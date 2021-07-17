@@ -5,5 +5,5 @@ public type Event record {
     string entityType;
     string entityId;
     string eventData;
-    time:Time timestamp;
+    time:Utc timestamp;
 };

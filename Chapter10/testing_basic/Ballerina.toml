@@ -1,0 +1,7 @@
+[package]
+org = "dhanushka"
+name = "testing_basic"
+version = "0.1.0"
+
+[build-options]
+observabilityIncluded = true

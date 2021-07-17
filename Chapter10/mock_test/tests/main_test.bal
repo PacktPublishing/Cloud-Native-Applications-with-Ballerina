@@ -1,5 +1,5 @@
 import ballerina/test;
-import ballerina/jdbc;
+import ballerinax/java.jdbc;
 import ballerina/http;
 import ballerina/sql;
 
@@ -8,7 +8,7 @@ import ballerina/sql;
     functionName: "getAvailableProductQuantity"
 }
 test:MockFunction getAvailableProductQuantityMockFunc = new();
-function mockGetAvailableProductQuantity(jdbc:Client jdbcClient, string inventoryItemId) returns @untainted int|error{
+function mockGetAvailableProductQuantity(jdbc:Client jdbcClient, string inventoryItemId) returns int|error{
     return 1;
 }
 
@@ -31,13 +31,13 @@ test:MockFunction availableProductQuantityMockFn = new();
 @test:Config {}
 function testCheckValidOrder() {
     test:when(availableProductQuantityMockFn).thenReturn(20);
-    OrderItemTable orderItemTable = table [
+    OrderItem[] orderItem = [
         {orderItemId: "3234",
         orderId: "38403294",
         quantity: 10,
         inventoryItemId: "834209"}
     ];
-    boolean|error status = checkValidOrder(jdbcClient, orderItemTable);
+    boolean|error status = checkValidOrder(jdbcClient, orderItem);
     if status is boolean {
         test:assertTrue(status, msg = "Cannot fulfil order");
     } else {
@@ -46,9 +46,9 @@ function testCheckValidOrder() {
 }
 
 @test:Config {}
-function testCheckValidOrderIntegration() {
-    http:Client clientEP = new ("http://localhost:9090");
-    var response = clientEP->post("/post", "POST: Hello World");
+function testCheckValidOrderIntegration() returns error?{
+    http:Client clientEP = check new ("http://localhost:9090");
+    http:Response|error response = clientEP->post("/post", "POST: Hello World");
     if (response is http:Response) {
 
     } else {

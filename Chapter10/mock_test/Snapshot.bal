@@ -5,5 +5,5 @@ public type Snapshot record {
     string entityId;
     int entityVersion;
     string message;
-    time:Time timestamp;
+    time:Utc timestamp;
 };

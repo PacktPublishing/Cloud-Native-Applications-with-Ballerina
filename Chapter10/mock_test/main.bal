@@ -1,12 +1,15 @@
-import ballerina/jdbc;
+// Test with `bal test`
+import ballerinax/java.jdbc;
 import ballerina/http;
 
-listener http:Listener orderEP = new(9090);
-service OrderService on orderEP {
-    resource function checkOrder(http:Caller caller,
-        http:Request req, OrderItemTable orderItems) returns error? {
+service /order_service on new http:Listener(9090) {
+    @http:ResourceConfig {
+        consumes: ["application/json"]
+    }
+    resource function post bindStruct(http:Caller caller, http:Request req,
+     @http:Payload {} OrderItem[] orderItems) returns error? {
             OrderRepository orderRepository = check new();
-            boolean status = check checkValidOrder(orderRepository.getJDBCClient(), <@untainted>orderItems);
+            boolean status = check checkValidOrder(orderRepository.getJDBCClient(), orderItems);
             if status {
                 check caller->respond("Order verified");
             } else {
@@ -32,7 +35,7 @@ function getOrderAggregateById(OrderRepository orderRepository, string orderId) 
     return new OrderAggregate(orderRepository, 'order, orderItems);
 }
 
-function checkValidOrder(jdbc:Client jdbcClient, OrderItemTable orderItems) returns boolean|error{
+function checkValidOrder(jdbc:Client jdbcClient, OrderItem[] orderItems) returns boolean|error{
     foreach OrderItem item in orderItems {
         int orderQuantity = item.quantity;
         int inventoryQuantity = check getAvailableProductQuantity(jdbcClient, item.inventoryItemId);
@@ -43,7 +46,7 @@ function checkValidOrder(jdbc:Client jdbcClient, OrderItemTable orderItems) retu
     return true;
 }
 
-function getAvailableProductQuantity(jdbc:Client jdbcClient, string inventoryItemId) returns @untainted int|error {
+function getAvailableProductQuantity(jdbc:Client jdbcClient, string inventoryItemId) returns int|error {
     stream<record{}, error> resultStream = jdbcClient->query(`SELECT Quantity FROM InventoryItems WHERE 
     InventoryItemId = ${inventoryItemId}`);
     record {|record {} value;|}? result = check resultStream.next();

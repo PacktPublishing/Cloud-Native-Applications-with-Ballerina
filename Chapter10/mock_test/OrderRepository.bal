@@ -1,15 +1,10 @@
 import ballerina/sql;
-import ballerina/jdbc;
+import ballerinax/java.jdbc;
 import ballerina/io;
-import ballerina/java;
+import ballerina/uuid;
 
 string dbUser = "root";
 string dbPassword = "root";
-
-public function createRandomUUID() returns handle = @java:Method {
-    name: "randomUUID",
-    'class: "java.util.UUID"
-} external;
 
 string jdbcUrl = "jdbc:mysql://localhost:3306/OMS_BALLERINA";
 public class OrderRepository {
@@ -58,7 +53,7 @@ public class OrderRepository {
     }
 
     public function addOrderItem(string orderId, int quantity, string inventoryItemId) returns error|string {
-        string orderItemId = createRandomUUID().toString();
+        string orderItemId = uuid:createType1AsString();
         sql:ParameterizedQuery createOrder = `INSERT INTO OrderItems( 
         OrderItemId, OrderId, Quantity, InventoryItemId)  
         VALUES(${orderItemId}, ${orderId}, ${quantity}, ${inventoryItemId})`; 
