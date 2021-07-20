@@ -3,13 +3,16 @@
 // `openssl pkcs12 -in ballerinaKeystore.p12 -nokeys -out ballerinaServer.crt`
 // `openssl pkcs12 -in ballerinaKeystore.p12  -nodes -nocerts -out ballerinaServer.key`
 
+// Start the service with `bal run https_server/`
+// Go to browser with the link `https://localhost:9093/testHTTPS`
+
 
 import ballerina/http;
 http:ListenerConfiguration epConfig = {
     secureSocket: {
         key: {
-            certFile: "resources2/ballerinaCert.crt",
-            keyFile: "resources2/ballerinaCert.key"
+            certFile: "resources/ballerinaServer.crt",
+            keyFile: "resources/ballerinaServer.key"
         }
     }
 };

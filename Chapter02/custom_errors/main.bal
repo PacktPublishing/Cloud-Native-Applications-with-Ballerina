@@ -60,17 +60,13 @@ type BirthdayValidationError distinct UserValidationError;
 
 function checkCustomerMobileNumber(Customer customer) returns UserValidationError? { 
     boolean matched = regex:matches(customer.mobileNumber, "^[(]?\\d{3}[)]?[(\\s)?.-]\\d{3}[\\s.-]\\d{4}$"); 
-    if matched { 
-        return (); 
-    } else { 
+    if !matched {
         return error MobileNumberValidationError("Invalid mobile number", code = 22331); 
     } 
 } 
 function checkCustomerEmail(Customer customer) returns UserValidationError? { 
     boolean matched = regex:matches(customer.email,"^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"); 
-    if matched { 
-        return (); 
-    } else { 
+    if !matched { 
         return error EmailValidationError("Invalid email address", code = 22332); 
     } 
 } 
@@ -78,7 +74,5 @@ function checkCustomerBirthday(Customer customer) returns UserValidationError? {
     time:Utc|error birthday = time:utcFromString(customer.birthDay);
         if birthday is error { 
             return error BirthdayValidationError("Invalid birthday format", code = 22333, cause = birthday); 
-        } else { 
-            return (); 
-        }      
+        }    
 } 

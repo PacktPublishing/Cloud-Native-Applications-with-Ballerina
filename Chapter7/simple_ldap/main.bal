@@ -1,6 +1,8 @@
 // Start LDAP server with ldapdef.ldif definition
 // Start the server with `bal run simple_ldap/` command
-// Follow instructions in nasic_auth sample
+// Try to invoke with delivery credentials `curl -X GET http://localhost:9090/oms/deliveryAccess -H 'authorization: Basic ZGVsaXZlcnk6ZGVsaXZlcnk='`
+// Try to invoke with customer that response 403 `curl -v -X GET  http://localhost:9090/oms/deliveryAccess -H 'authorization: Basic Y3VzdG9tZXI6Y3VzdG9tZXI='`
+// Follow instructions in basic_auth sample
 import ballerina/http;
 import ballerina/auth;
 listener http:Listener securedEP = new(9090);
