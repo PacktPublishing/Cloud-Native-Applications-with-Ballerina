@@ -11,7 +11,7 @@
 // Execute `kubectl get pods` to get list of pods
 // Execute `kubectl get services` to get list of services
 // Execute `minikube service --url <service_name>` to get service endpoint
-// Inovke the endpoint from browser. ex: http://127.0.0.1:53054/hello/sayHello
+// Inovke the endpoint with `curl -X GET http://127.0.0.1:53054/hello/sayHello`
 import ballerina/http;
 service /hello on new http:Listener(9090) { 
     resource function get sayHello(http:Caller caller, http:Request req) returns error? { 

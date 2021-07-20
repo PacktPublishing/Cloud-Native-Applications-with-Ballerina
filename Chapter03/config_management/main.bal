@@ -1,4 +1,5 @@
 // This sample to demostrate how to handle configs in Kubernetes
+// Use `eval $(minikube docker-env)` to change to minikube environment
 // Build the project with `bal build --cloud=k8s config_management/`
 // Execute `kubectl apply -f <project_home>/target/kubernetes/config_management`
 // Execute `kubectl get services` to get list of services

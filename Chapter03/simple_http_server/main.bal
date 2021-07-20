@@ -55,7 +55,7 @@ service /hello on new http:Listener(9090) {
     }
     
     // Passing structured data to HTTP resources
-    // curl -X POST http://localhost:9090/hello/createOrderJson -d '{"hello": "world"}'
+    // curl -X POST http://localhost:9090/hello/createOrderJson -H 'content-type: application/json' -d '{"hello": "world"}'
     // Response: {"hello":"world"}
     @http:ResourceConfig {
         consumes: ["application/json"]
@@ -75,7 +75,7 @@ service /hello on new http:Listener(9090) {
         check caller->respond(message); 
     }
 
-    // curl -X POST http://localhost:9090/hello/createOrderJson -d '{"customerId": "334e3b3b2331", "shippingAddress": "New York"}'
+    // curl -X POST http://localhost:9090/hello/createOrderJson -H 'content-type: application/json' -d '{"customerId": "334e3b3b2331", "shippingAddress": "New York"}'
     // Response: {"customerId":"334e3b3b2331", "shippingAddress":"New York"}
     @http:ResourceConfig {
         consumes: ["application/json"]
