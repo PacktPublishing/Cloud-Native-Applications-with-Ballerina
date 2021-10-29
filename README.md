@@ -26,7 +26,7 @@ The code will look like the following:
 ```
 import ballerina/http;
 service /hello on new http:Listener(9090) { 
-    resource function get greeting() returns error|string {
+    resource function get greeting() returns string {
         return "Hello, World!"; 
     }
 }
