@@ -1,6 +1,7 @@
 import ballerina/io;
 import ballerinax/rabbitmq;
 
+
 public function main() returns error?{
     io:println("Hello World!");
 

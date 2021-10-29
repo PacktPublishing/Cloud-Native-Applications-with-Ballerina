@@ -1,3 +1,4 @@
+// Run the sample with `bal run jwt_issuer/`
 import ballerina/io;
 import ballerina/jwt;
 public function main() returns error?{

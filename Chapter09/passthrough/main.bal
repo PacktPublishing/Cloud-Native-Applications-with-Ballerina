@@ -1,3 +1,5 @@
+// Run the project with `bal run passthrough/`
+// Access `http://localhost:9090/google` on web browser
 import ballerina/http;
 service / on new http:Listener(9090) {
     resource function 'default google(http:Request req)

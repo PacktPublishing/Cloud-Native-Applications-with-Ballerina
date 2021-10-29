@@ -4,14 +4,14 @@
 // Execute `minikube service hashicorp-consul-ui` to access the Consul UI and list caller service and backend service.
 // Execute `kubectl get services` to get list of services
 // Execute `minikube service --url <service_name>` to get service endpoint
-// Inovke the endpoint from browser. ex: http://127.0.0.1:53054/caller/sayHello
+// Inovke the endpoint from browser. ex: http://127.0.0.1:53054/caller/greeting
 
-import ballerina/http;
+import ballerina/http; // change base path and resource function name
 
-service /caller on new http:Listener(9090) { 
-    resource function get sayHello(http:Caller caller, http:Request req) returns @tainted error? { 
+service /caller on new http:Listener(9090) { // remove caller and return the value
+    resource function get greeting() returns error|string { 
         http:Client clientEndpoint = check new ("http://consul-backend:9091");
-        string payload = check clientEndpoint->get("/backend/sayHello");
-        check caller->respond("Response from backend server: " + payload); 
+        string payload = check clientEndpoint->get("/backend/greeting");
+        return "Response from backend server: " + payload;
     }
 }

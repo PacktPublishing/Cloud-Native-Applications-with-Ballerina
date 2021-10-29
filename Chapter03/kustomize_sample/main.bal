@@ -4,8 +4,8 @@
 // Execute `kustomize build kustomize_sample/`.
 // This will output the updated Kubernetes artifacts
 import ballerina/http;
-service /hello on new http:Listener(9090) { 
-    resource function get sayHello(http:Caller caller, http:Request req) returns error? { 
-        check caller->respond("Hello World!"); 
+service /hello on new http:Listener(9090) { // change base path and resource function name
+    resource function get greeting() returns error|string { 
+        return "Hello World!"; 
     }
 }

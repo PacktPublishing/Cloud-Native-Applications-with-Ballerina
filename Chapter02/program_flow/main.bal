@@ -28,7 +28,7 @@ function usingIf2() {
     boolean isEmployed = true; 
     if age>18 && isEmployed {
         io:println("Employed adult"); 
-    } else if(age>18 && !isEmployed) { 
+    } else if age>18 && !isEmployed { 
         io:println("Unemployed adult"); 
     } else { 
         io:println("Not an adult"); 

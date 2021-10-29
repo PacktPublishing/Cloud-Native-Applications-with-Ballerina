@@ -31,13 +31,13 @@ service /InventoryService on new http:Listener(9091) {
             log:printInfo("Item id " + inventoryItemId + "fullPrice " + fullPrice.toString());
             check observe:addTagToSpan("Quantity of " + orderItemId, quantity.toString(), orderItemSpan);
             result = observe:finishSpan(orderItemSpan);
-            if (result is error) {
+            if result is error {
                 log:printError("Error in finishing span", result);
             }
         }
         check observe:addTagToSpan("Total", totalPrice.toString(), getAmountSpan);
         result = observe:finishSpan(getAmountSpan);
-        if (result is error) {
+        if result is error {
             log:printError("Error in finishing span", result);
         }
         http:Response res = new;

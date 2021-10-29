@@ -6,7 +6,7 @@ import ballerina/file;
 function beforeSuiteFunc() {
     io:println("Coping config files");
     file:Error? copyDirResults = file:copy("/usr/data/conf.toml", "/usr/test/conf.toml", file:REPLACE_EXISTING);
-    if (copyDirResults is ()) {
+    if copyDirResults is () {
         io:println("bar.txt file is copied to new path ");
     }
 }
@@ -54,7 +54,7 @@ function afterFunction() {
 function afterSuiteFunc() {
     io:println("Removing config files");
     file:Error? removeResults = file:remove("/usr/test/conf.toml");
-    if (removeResults is ()) {
+    if removeResults is () {
         io:println("File removed");
     }
 }

@@ -1,6 +1,6 @@
 import ballerina/io;
 import ballerina/time;
-import ballerina/system;
+import ballerina/uuid;
 import order_api;
 
 public function main() returns error?{
@@ -8,11 +8,11 @@ public function main() returns error?{
     order_api:OrderRepository orderRepository = check new();
     order_api:Entity[] entities= check orderRepository.getAllEntities();
     foreach order_api:Entity entity in entities {
-        time:Time entityTo = check time:createTime(2019, 3, 28, 23, 42, 45, 200, "America/Panama");
-        order_api:Event[] events = check orderRepository.readEventsTo(entity.entityId, entityTo);
-        order_api:OrderAggregate orderAggregate = check order_api:createEmptyOrderAggregate(orderRepository, entity.entityId);
+        time:Utc entityTo = check time:utcFromString("2029-03-28T10:23:42.120Z")
+        Event[] events = check orderRepository.readEventsTo(entity.entityId, entityTo);
+        OrderAggregate orderAggregate = check createEmptyOrderAggregate(orderRepository, entity.entityId);
         if events.length() > 0 {
-            foreach order_api:Event event in events {
+            foreach Event event in events {
                 check orderAggregate.apply(event);
             }
         }
@@ -24,8 +24,8 @@ public function main() returns error?{
             orderItems: orderAggregate.getOrderItems()
         };
         string message = orderDetail.toString();
-        string snapshotId = system:uuid();
-        order_api:Snapshot snapshot = {
+        string snapshotId = uuid:createType1AsString();
+        Snapshot snapshot = {
                 snapshotId: snapshotId,
                 entityType: entity.entityType,
                 entityId: entity.entityId,
@@ -35,6 +35,5 @@ public function main() returns error?{
         };
         check orderRepository.addSnapshot(snapshot);
         check orderRepository.removeEventTo(entity.entityId, entityTo);
-        // need transaction handling
     }
 }

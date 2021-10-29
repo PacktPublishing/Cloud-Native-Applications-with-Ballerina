@@ -1,0 +1,18 @@
+openapi: 3.0.1
+info:
+  title: ' hello'
+  version: 1.0.0
+servers:
+- url: localhost:9091/hello
+paths:
+  /sayHello:
+    get:
+      operationId: operation1_get_/sayHello
+      responses:
+        "500":
+          description: Found unexpected output
+          content:
+            text/plain:
+              schema:
+                type: string
+components: {}

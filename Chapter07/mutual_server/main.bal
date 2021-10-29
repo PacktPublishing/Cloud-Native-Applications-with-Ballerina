@@ -32,7 +32,7 @@ http:ListenerConfiguration mutualSSLServiceEPConfig = {
 };
 listener http:Listener serviceEP = new (9093, mutualSSLServiceEPConfig); 
 service /testMutualSSL on serviceEP {
-    resource function get .(http:Caller caller, http:Request req) returns string {
+    resource function get .() returns string {
         return "Hello, World!";
     }
 }

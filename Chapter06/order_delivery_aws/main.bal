@@ -1,10 +1,17 @@
 // Build the project with `bal build order_delivery_aws/` command
+// Create or update sendDeliveryRequestMail function with one of the following command
 // `aws lambda create-function --function-name sendDeliveryRequestMail --zip-file fileb://order_delivery_aws/target/bin/aws-ballerina-lambda-functions.zip --handler order_delivery_aws.sendDeliveryRequestMail --runtime provided --role $LAMBDA_ROLE_ARN --layers arn:aws:lambda:us-west-1:134633749276:layer:ballerina-jre11:6 --memory-size 512 --timeout 10 --region us-west-1`
 // `aws lambda update-function-code --function-name sendDeliveryRequestMail --zip-file fileb://order_delivery_aws/target/bin/aws-ballerina-lambda-functions.zip --region us-west-1`
 
+// Create or update sendDeliveryConfirmMail function with one of the following command
 // `aws lambda create-function --function-name sendDeliveryConfirmMail --zip-file fileb://order_delivery_aws/target/bin/aws-ballerina-lambda-functions.zip --handler order_delivery_aws.sendDeliveryConfirmMail --runtime provided --role $LAMBDA_ROLE_ARN --layers arn:aws:lambda:us-west-1:134633749276:layer:ballerina-jre11:6 --memory-size 512 --timeout 10 --region us-west-1`
 // `aws lambda update-function-code --function-name sendDeliveryConfirmMail --zip-file fileb://order_delivery_aws/target/bin/aws-ballerina-lambda-functions.zip --region us-west-1`
-// invoke with `https://xxxx.execute-api.us-west-1.amazonaws.com/staging/startdeliveryprocess?orderId=43234234`
+
+// Create AWS step function on AWS Console
+// Create API gateway to invoke lambda functions
+// Stage API on AWS platform
+// invoke with `curl -X GET 'https://xxxxxxxx.execute-api.us-west-1.amazonaws.com/staging/startdeliveryprocess?orderId=43234234'`
+
 import ballerinax/awslambda;
 import ballerina/email;
 import ballerina/url;

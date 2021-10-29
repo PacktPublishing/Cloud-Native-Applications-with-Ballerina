@@ -7,13 +7,13 @@ import ballerina/http;
 import ballerina/io;
 
 service /form on new http:Listener(9090) { 
-    resource function post .(http:Caller caller, http:Request req) returns error? { 
+    resource function post .(http:Request req) returns error|string { 
         map<string> data = check req.getFormParams();
         io:println("Name: " + data.get("name"));
         io:println("Email: " + data.get("email"));
         io:println("Birthday: " + data.get("birthday"));
         io:println("Gender: " + data.get("gender"));
-        check caller->respond("Hello " + data.get("name")); 
+        return "Hello " + data.get("name"); 
     }
     resource function get .(http:Caller caller,http:Request request) returns error? {
       http:Response response = new;

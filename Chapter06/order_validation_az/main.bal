@@ -36,7 +36,7 @@ public function validateOrder(af:Context ctx,
         @af:QueueOutput { queueName: "order-success-queue" } af:StringOutputBinding outSuccessMsg,
         @af:QueueOutput { queueName: "order-fail-queue" } af:StringOutputBinding outFailedMsg) {
             Order orderItem = orders.get(inputMessage);
-            if (orderItem.totalPrice > maxCreditLimit) {
+            if orderItem.totalPrice > maxCreditLimit {
                 outFailedMsg.value = inputMessage;
             } else {
                 outSuccessMsg.value = inputMessage;
@@ -44,7 +44,8 @@ public function validateOrder(af:Context ctx,
 }
 @af:Function
 public function validateOrderSuccess(af:Context ctx, 
-        @af:QueueTrigger { queueName: "order-success-queue" } string inputMessage) returns error?{
+        @af:QueueTrigger { queueName: "order-success-queue" } string inputMessage) 
+        returns error?{
     ctx.log("In Message: " + inputMessage);
     ctx.log("Metadata: " + ctx.metadata.toString());
     Order orderItem = orders.get(inputMessage);
@@ -53,7 +54,8 @@ public function validateOrderSuccess(af:Context ctx,
 
 @af:Function
 public function validateOrderFail(af:Context ctx, 
-        @af:QueueTrigger { queueName: "order-fail-queue" } string inputMessage) returns error?{
+        @af:QueueTrigger { queueName: "order-fail-queue" } string inputMessage) 
+        returns error?{
     ctx.log("In Message: " + inputMessage);
     ctx.log("Metadata: " + ctx.metadata.toString());
      Order orderItem = orders.get(inputMessage);
@@ -67,7 +69,7 @@ function sendEmail(string to, string subject, string body) returns error?{
         to: [to],
         subject: subject,
         body: body,
-        'from: "madushandhanushka@gmail.com"
+        'from: "mymail@mail.com"
     };
     check smtpClient->sendMessage(email);
 }

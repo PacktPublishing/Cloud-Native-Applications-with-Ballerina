@@ -4,14 +4,19 @@
 // If lambda function already exist, use the following command to redeploy it
 // `aws lambda update-function-code --function-name totalPrice --zip-file fileb://aws_basic/target/bin/aws-ballerina-lambda-functions.zip --region us-west-1`
 // Invoke the lambda function with the following command
-// aws lambda invoke --function-name totalPrice --payload '{"itemId": "item1", "quantity": 5}' response.json --region us-west-1 --cli-binary-format raw-in-base64-out 
+// `aws lambda invoke --function-name totalPrice --payload '{"itemId": "item1", "quantity": "3"}' response.json --region us-west-1 --cli-binary-format raw-in-base64-out`
+// Create API trigger on AWS console
+// Invoke with `curl -X GET 'https://xxxxxxxx.execute-api.us-west-1.amazonaws.com/default/totalPrice?itemId=item1&quantity=3'`
+
 import ballerinax/awslambda;
 import ballerina/io;
+import ballerina/lang.'float as floats;
+
 @awslambda:Function
-public function totalPrice(awslambda:Context ctx, OrderItem item) returns json|error {
-    InventoryItem? inventoryItem = itemList[item.itemId];
+public function totalPrice(awslambda:Context ctx, json item) returns json|error {
+    InventoryItem? inventoryItem = itemList[check item.itemId];
     if (inventoryItem is InventoryItem) {
-        return { "totalRes" : inventoryItem.price * <float>item.quantity};
+        return { "totalRes" : inventoryItem.price * check floats:fromString(check item.quantity)};
     } else {
         return error("Error while retrieving table data");
     }

@@ -16,7 +16,7 @@ paths:
         '200':    # status code
           description: Hello world
           content:
-            application/json:
+            text/plain:
               schema: 
                 example: Ok
 components: {}

@@ -1,3 +1,4 @@
+// run the sample with `bal run jdbc_h2_sample/` command
 import ballerina/io;
 import ballerinax/java.jdbc;
 import ballerina/sql;
@@ -32,9 +33,6 @@ function readData(jdbc:Client jdbcClient) {
     error? e = customerStream.forEach(function(Customer customer) {
         io:println(customer);
     });
-    if (e is error) {
-        io:println(e);
-    }
 }
 public function main() returns error? {
 

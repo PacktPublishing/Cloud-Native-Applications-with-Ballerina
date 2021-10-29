@@ -45,7 +45,7 @@ resource function get .(http:Caller caller,http:Request request) returns error? 
 function broadcastMessage(string message) {
     foreach var con in clientConnectionMap {
         var err = con->writeTextMessage(message);
-        if (err is websocket:Error) {
+        if err is websocket:Error {
             io:println("Error while sending message:");
         }
     }

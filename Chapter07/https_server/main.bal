@@ -11,15 +11,15 @@ import ballerina/http;
 http:ListenerConfiguration epConfig = {
     secureSocket: {
         key: {
-            certFile: "resources/ballerinaServer.crt",
-            keyFile: "resources/ballerinaServer.key"
+            certFile: "resources2/ballerinaServer.crt",
+            keyFile: "resources2/ballerinaServer.key"
         }
     }
 };
 listener http:Listener httpsListener = new (9093, epConfig);
 
 service /testHTTPS on httpsListener {
-    resource function get .(http:Caller caller, http:Request req) returns error?{
-        _ = check caller->respond("Hello World!");
+    resource function get .() returns string{
+        return "Hello World!";
     }
 }

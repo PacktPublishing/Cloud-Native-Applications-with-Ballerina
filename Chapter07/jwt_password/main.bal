@@ -1,3 +1,4 @@
+// Run this sample with `bal run jwt_password/`
 import ballerina/http;
 import ballerina/io;
 http:Client ep = check new("http://localhost:9090", {

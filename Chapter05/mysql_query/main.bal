@@ -1,3 +1,5 @@
+// Set mysql JDBC library location in Ballerina.toml file
+// run the sample with `bal run mysql_query/` command
 import ballerina/io;
 import ballerina/sql;
 import ballerinax/mysql;
@@ -7,29 +9,23 @@ function initializeDB(mysql:Client mysqlClient) returns sql:Error? {
     sql:ExecutionResult result =
         check mysqlClient->execute("CREATE DATABASE IF NOT EXISTS OMS_BALLERINA");
         result = check mysqlClient->execute("CREATE TABLE IF NOT EXISTS " +
-        "OMS_BALLERINA.Customers(CustomerId INTEGER NOT NULL AUTO_INCREMENT, " +
+        "OMS_BALLERINA.CustomersTable(CustomerId INTEGER NOT NULL AUTO_INCREMENT, " +
         "FirstName  VARCHAR(300), LastName VARCHAR(300), " +
         "ShippingAddress VARCHAR(500), BillingAddress VARCHAR(500), " +
         "Email VARCHAR(300), Country  VARCHAR(300), PRIMARY KEY (CustomerId))");
-        result = check mysqlClient->execute("INSERT INTO OMS_BALLERINA.Customers(" +
+        result = check mysqlClient->execute("INSERT INTO OMS_BALLERINA.CustomersTable(" +
         "FirstName, LastName, ShippingAddress, BillingAddress, Email, Country) " +
         "VALUES('Sherlock', 'Holmes', '221b, baker street', '221b, baker street'," +
         " 'sherlock@mail.com', 'UK')");
 }
 function readData(mysql:Client mysqlClient) returns error? {
     stream<record{}, error> resultStream =
-        mysqlClient->query("Select * from OMS_BALLERINA.Customers");
+        mysqlClient->query("Select * from OMS_BALLERINA.CustomersTable");
     error? e = resultStream.forEach(function(record {} result) {
         io:println("Customer detials: ", result);
         io:println("Customer first name: ", result["FirstName"]);
         io:println("Customer last name: ", result["LastName"]);
     });
-    if (e is sql:Error) {
-        io:println("Error while reading database!", e);
-        check mysqlClient.close();
-    } else if(e is error) {
-        io:println("Error while iterating  the stream", e);
-    }
 }
 public function main() returns error? {
         sql:ConnectionPool connPool = {
@@ -43,12 +39,7 @@ public function main() returns error? {
         io:println("Sample data initialization failed!");
         io:println(mysqlClient);
     } else {
-        sql:Error? dbError = initializeDB(mysqlClient);
-        if dbError is sql:Error {
-            check mysqlClient.close();
-            io:println("Database execution failure!");
-            io:println(dbError);
-        }
+        check initializeDB(mysqlClient);
         check readData(mysqlClient);
         check mysqlClient.close();
         io:println("MySQL Client initialization for querying data successed!");

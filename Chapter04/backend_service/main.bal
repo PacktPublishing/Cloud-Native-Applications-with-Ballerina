@@ -4,8 +4,8 @@
 // Deploy the backend service with `kubectl apply -f <project_home>/target/kubernetes/backend_service` command.
 // Go to the env_caller_service and dns_caller_service examples and follow instructions.
 import ballerina/http;
-service /backend on new http:Listener(9091) { 
-    resource function get sayHello(http:Caller caller, http:Request req) returns error? { 
-        check caller->respond("Hello from backend server!"); 
+service /backend on new http:Listener(9091) {
+    resource function get greeting() returns error|string { 
+        return "Hello from backend server!"; 
     }
 }

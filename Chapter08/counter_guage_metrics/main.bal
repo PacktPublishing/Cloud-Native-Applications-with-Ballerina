@@ -14,7 +14,7 @@ service /Order on new http:Listener(9092) {
         observe:Counter registeredCounter = new ("total_orders",
             desc = "Total number of orders");
         error? result = registeredCounter.register();
-        if (result is error) {
+        if result is error {
             io:println("Error in registering counter", result);
         }
         registeredCounter.increment();

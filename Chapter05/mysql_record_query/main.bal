@@ -1,3 +1,6 @@
+// Set mysql JDBC library location in Ballerina.toml file
+// run the sample with `bal run mysql_record_query/` command
+
 import ballerina/io;
 import ballerina/sql;
 import ballerinax/mysql;
@@ -7,7 +10,7 @@ function initializeDB(mysql:Client mysqlClient) returns sql:Error? {
     sql:ExecutionResult result =
         check mysqlClient->execute("CREATE DATABASE IF NOT EXISTS OMS_BALLERINA");
         result = check mysqlClient->execute("CREATE TABLE IF NOT EXISTS " +
-        "OMS_BALLERINA.Customers(CustomerId INTEGER NOT NULL AUTO_INCREMENT, " +
+        "OMS_BALLERINA.CustomersTable(CustomerId INTEGER NOT NULL AUTO_INCREMENT, " +
         "FirstName  VARCHAR(300), LastName VARCHAR(300), " +
         "ShippingAddress VARCHAR(500), BillingAddress VARCHAR(500), " +
         "Email VARCHAR(300), Country  VARCHAR(300), PRIMARY KEY (CustomerId))");
@@ -23,7 +26,7 @@ type Customer record {|
 |};
 function readData(mysql:Client mysqlClient) returns error? {
     stream<record{}, error> resultStream =
-        mysqlClient->query("Select * from OMS_BALLERINA.Customers", Customer);
+        mysqlClient->query("Select * from OMS_BALLERINA.CustomersTable", Customer);
         stream<Customer, sql:Error> customerStream =
         <stream<Customer, sql:Error>>resultStream;
     error? e = customerStream.forEach(function(Customer customer) {
@@ -37,19 +40,14 @@ function readData(mysql:Client mysqlClient) returns error? {
         io:println("Error while itterating the stream", e);
     }
 }
-function insertCustomer(mysql:Client mysqlClient, Customer customer) {
-    sql:ParameterizedQuery insertQuery = `INSERT INTO OMS_BALLERINA.Customers(
-        FirstName, LastName, ShippingAddress, BillingAddress, Email, Country) 
-        VALUES(${customer.firstName}, ${customer.lastName}, 
-        ${customer.shippingAddress}, ${customer.billingAddress}, 
-        ${customer.email}, ${customer.country})`;
-    sql:ExecutionResult|sql:Error result =
-                mysqlClient->execute(insertQuery);
-    if (result is sql:ExecutionResult) {
-        io:println("Inserted Row count: ", result.affectedRowCount);
-    } else {
-        io:println("Error occurred: ", result);
-    }
+function insertCustomer(mysql:Client mysqlClient, Customer customer) returns error?{
+    sql:ParameterizedQuery insertQuery = `INSERT INTO 
+        OMS_BALLERINA.CustomersTable(FirstName, LastName, ShippingAddress, 
+        BillingAddress, Email, Country) VALUES(${customer.firstName}, 
+        ${customer.lastName}, ${customer.shippingAddress}, 
+        ${customer.billingAddress}, ${customer.email}, ${customer.country})`;
+    sql:ExecutionResult result = check mysqlClient->execute(insertQuery);
+    io:println("Inserted Row count: ", result.affectedRowCount);
 }
 public function main() returns error? {
         sql:ConnectionPool connPool = {
@@ -78,7 +76,7 @@ public function main() returns error? {
             email: "tom@mail.com",
             country: "USA"
         };
-        insertCustomer(mysqlClient, customer);
+        check insertCustomer(mysqlClient, customer);
         check readData(mysqlClient);
         check mysqlClient.close();
         io:println("MySQL Client initialization for querying data successed!");

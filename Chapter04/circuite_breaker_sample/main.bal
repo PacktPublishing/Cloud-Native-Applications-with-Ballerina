@@ -4,7 +4,7 @@
 import ballerina/http;
 import ballerina/io;
 
-public function main() returns error? {
+public function main() returns error? { // check the ballerina sample code
     http:Client backendClientEP =  check new ("https://showcase.api.linx.twenty57.net", {
             circuitBreaker: {
                 rollingWindow: {

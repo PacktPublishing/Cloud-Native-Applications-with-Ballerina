@@ -2,9 +2,7 @@
 // Test with following curl command
 // curl -XPOST -H "Content-type: application/json" -d '{ "query": " { inventory(inventoryId: \"53542364\") { name, inventoryItems{quantity}} }" }' 'http://localhost:9090/graphql'
 import ballerina/graphql;
-import ballerina/http;
-http:Listener httpListener = check new(9090);
-service graphql:Service /graphql on new graphql:Listener(httpListener) {
+service graphql:Service /graphql on new graphql:Listener(9090) {
     resource function get inventory(string inventoryId) returns Inventory|error {
         Inventory[] item = inventory.filter(function (Inventory value) returns boolean {
             if value.inventoryId == inventoryId {
