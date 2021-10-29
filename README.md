@@ -20,14 +20,14 @@ This book covers the following exciting features:
 If you feel this book is for you, get your [copy](https://www.amazon.com/dp/1800200633) today!
 
 ## Instructions and Navigations
-All of the code is organized into folders. For example, Chapter02.
+All of the code is organized into folders. For example, Chapter03.
 
 The code will look like the following:
 ```
 import ballerina/http;
-service /hello on new http:Listener(9090) {     
-    resource function get sayHello(http:Caller caller, http:Request req) returns error? {         
-        check caller->respond("Hello, World!");     
+service /hello on new http:Listener(9090) { 
+    resource function get greeting() returns error|string {
+        return "Hello, World!"; 
     }
 }
 ```
