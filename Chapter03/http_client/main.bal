@@ -12,4 +12,7 @@ public function main() returns error?{
 
     json msg2 = check clientEndpoint->post("/UnixTime/fromunixtimestamp", {"UnixTimeStamp": "1589772280", "Timezone": ""});
     io:println("Response is: " + msg2.toString());
+
+    json msg3 = check clientEndpoint->execute("POST", "/UnixTime/fromunixtimestamp", {"UnixTimeStamp": "1589772280", "Timezone": ""});
+    io:println("Response is: " + msg3.toString());
 }

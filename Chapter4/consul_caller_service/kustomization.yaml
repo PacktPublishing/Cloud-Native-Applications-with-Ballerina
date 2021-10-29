@@ -1,4 +1,0 @@
-resources:
-- target/kubernetes/consul_caller_service/consul_caller_service.yaml
-patchesStrategicMerge:
-- resources/deployment.yaml

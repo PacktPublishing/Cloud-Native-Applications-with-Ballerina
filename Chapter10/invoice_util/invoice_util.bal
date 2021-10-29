@@ -5,11 +5,7 @@ public function hello() {
     io:println("Hello World!");
 }
 public function generateInvoice(Invoice invoice) returns xml {
-    string|error converted_time = time:utcToString(invoice.invoiceDate);
-    string time = "";
-    if (converted_time is string) {
-        time = converted_time;
-    }
+    string time = time:utcToString(invoice.invoiceDate);
     xml invoiceOutput = xml `<div>
     <div><b>Prime Mart</b></div>
     <div>Name: ${invoice.customerName}</div>

@@ -4,14 +4,13 @@
 // Execute `kubectl apply -f <project_home>/target/kubernetes/config_management`
 // Execute `kubectl get services` to get list of services
 // Execute `minikube service --url <service_name>` to get service endpoint
-// Inovke the endpoint from browser. ex: http://127.0.0.1:53054/hello/readConfig
+// Inovke the endpoint with curl command. ex: curl -X GET http://127.0.0.1:53054/hello/config
 
 import ballerina/http;
-import ballerina/io;
 
+configurable string key1 = "abc";
 service /hello on new http:Listener(9090) { 
-    resource function get readConfig(http:Caller caller, http:Request req) returns error? {
-        string readContent = check io:fileReadString("/home/conf/init.conf");
-        check caller->respond(readContent); 
+    resource function get config() returns error|string {
+        return key1; 
     }
 }

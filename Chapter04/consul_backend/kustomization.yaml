@@ -1,0 +1,4 @@
+resources:
+- target/kubernetes/consul_backend/consul_backend.yaml
+patchesStrategicMerge:
+- kustomize/deployment.yaml

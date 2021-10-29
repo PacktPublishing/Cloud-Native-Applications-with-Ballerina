@@ -4,5 +4,4 @@ name="config_management"
 tag="v0.1.0"
 
 [[cloud.config.files]] 
-file = "resources/init.conf" 
-mount_path = "/home/conf" 
+file = "resources/Config.toml"  
