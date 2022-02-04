@@ -1,3 +1,6 @@
+// ----Classes sample-------
+// Run this sample with `bal run classes_sample/` command
+
 import ballerina/io;
 
 class User { 

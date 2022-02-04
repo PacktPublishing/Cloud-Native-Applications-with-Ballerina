@@ -1,3 +1,6 @@
+// ----Check error expression sample-------
+// Run this sample with `bal run check_expression_error/` command
+
 import ballerina/io; 
 import ballerina/time; 
 

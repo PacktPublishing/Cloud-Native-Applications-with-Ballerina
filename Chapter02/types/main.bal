@@ -1,3 +1,5 @@
+// ----Ballerina type system samples -------
+// Run this sample with `bal run types/` command
 import ballerina/io;
 
 public function main() {

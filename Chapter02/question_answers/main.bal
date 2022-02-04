@@ -1,3 +1,6 @@
+// ----Ballerina answers for questions -------
+// Run this sample with `bal run question_answers/` command
+
 import ballerina/io;
 
 public function main() {

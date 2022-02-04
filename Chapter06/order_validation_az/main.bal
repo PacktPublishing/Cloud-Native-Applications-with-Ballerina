@@ -69,7 +69,7 @@ function sendEmail(string to, string subject, string body) returns error?{
         to: [to],
         subject: subject,
         body: body,
-        'from: "madushandhanushka@gmail.com"
+        'from: "mymail@mail.com"
     };
     check smtpClient->sendMessage(email);
 }

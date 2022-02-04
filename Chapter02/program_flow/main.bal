@@ -1,3 +1,6 @@
+// ----Ballerina program flow instructions sample-------
+// Run this sample with `bal run program_flow/` command
+
 import ballerina/io;
 
 public function main() {

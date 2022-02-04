@@ -1,3 +1,6 @@
+// ----Ballerina custom errors sample-------
+// Run this sample with `bal run custom_errors/` command
+
 import ballerina/io;
 import ballerina/regex;
 import ballerina/time;

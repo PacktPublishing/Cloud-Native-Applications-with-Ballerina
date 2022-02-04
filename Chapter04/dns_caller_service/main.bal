@@ -15,4 +15,3 @@ service /caller on new http:Listener(9090) {
         return "Response from backend server: " + payload; 
     }
 }
-

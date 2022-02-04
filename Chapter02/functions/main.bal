@@ -1,3 +1,6 @@
+// ----Ballerina function sample-------
+// Run this sample with `bal run functions/` command
+
 import ballerina/io;
 
 public function main() {
@@ -18,7 +21,7 @@ function sum(int a, int b) returns int {
     return a + b; 
 } 
 function simpleFunctionCall() {
-    int result = sum(4,5);
+    io:println("Simple function call with sum " + sum(4,5).toString());
 }
 
 //--- Default arguements
@@ -35,7 +38,7 @@ function sumABC(int a = 4, int b = 5, int c = 6) returns int {
     return a + b + c; 
 } 
 function callWithNamedArguments() {
-    int valueSum = sumABC(a = 5, c = 6); 
+    io:println("Call with named arguments " + sumABC(a = 5, c = 6).toString()); 
 }
 
 //--- Rest paramters
@@ -58,7 +61,7 @@ function getUserDetails(string name, int age) returns [string, string] {
 } 
 function callWithTuple() {
     [string, string] [nameDetail, ageDetail] = getUserDetails("Alice", 24); 
-
+    io:println("Result name " + nameDetail + " age " + ageDetail);
     // ignore return value
     _ = getUserDetails("Alice", 24); 
 }

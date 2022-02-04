@@ -1,3 +1,6 @@
+// ----Ballerina error handling sample-------
+// Run this sample with `bal run error_handling/` command
+
 import ballerina/io; 
 import ballerina/time; 
 

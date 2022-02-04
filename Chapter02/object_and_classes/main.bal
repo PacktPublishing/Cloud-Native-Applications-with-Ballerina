@@ -1,3 +1,6 @@
+// ----Ballerina object and classes sample-------
+// Run this sample with `bal run object_and_classes/` command
+
 import ballerina/io;
 
 type User object {
