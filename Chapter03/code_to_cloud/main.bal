@@ -9,8 +9,10 @@
 // Execute with `kubectl apply -f <project_home>/target/kubernetes/code_to_cloud`.
 // Replace `<project_home>` with the project home location
 // Execute `kubectl get pods` to get list of pods
+// Check list of deployment with `kubectl get deployments`
+// Expose service as nodeport with `kubectl expose deployment <deployment_name> --type=NodePort` command
 // Execute `kubectl get services` to get list of services
-// Execute `minikube service --url <service_name>` to get service endpoint
+// Execute `minikube service --url <nodeport_service_name>` to get service endpoint
 // Inovke the endpoint with `curl -X GET http://127.0.0.1:53054/hello/greeting`
 import ballerina/http;
 service /hello on new http:Listener(9090) { 

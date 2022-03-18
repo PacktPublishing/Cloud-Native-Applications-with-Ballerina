@@ -7,14 +7,14 @@
 // If you removed readiness and try out this sample, you will see, this deployment start and ready.
 
 import ballerina/http;
-service / on new http:Listener(9090) {  // change base path to /
+service / on new http:Listener(9090) {
     resource function get sayHello() returns error|string { 
         return "Hello, World!"; 
     }
     resource function get liveness() returns error|string { 
         return "pong"; 
     }
-    resource function get readiness() returns error|string { // change method name
+    resource function get readiness() returns error|string {
         http:Client clientEndpoint = check new ("http://localhost:9091");
         string response = check clientEndpoint->get("/backend/health_check");
         return "pong"; 

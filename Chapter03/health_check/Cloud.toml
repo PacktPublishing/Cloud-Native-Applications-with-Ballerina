@@ -5,8 +5,8 @@ tag="v0.1.0"
 
 [cloud.deployment.probes.readiness]
 port = 9090
-path = "/hello/readiness"
+path = "/readiness"
 
 [cloud.deployment.probes.liveness]
 port = 9090
-path = "/hello/liveness"
+path = "/liveness"

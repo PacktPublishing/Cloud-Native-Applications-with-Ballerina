@@ -11,12 +11,12 @@ listener grpc:Listener grpcListener = new (9090);
     descMap: getDescriptorMap()
 }
 service "OrderCalculate" on grpcListener {
-    remote function calculateAsStream(stream<OrderItem, error> itemStream) returns stream<float> {
+    remote function calculateAsStream(stream<OrderItem, error> itemStream) returns stream<float>|error {
         io:print("Invoke the chat RPC");
         float[] responses = [];
         float total = 0;
         int i = 0;
-        error? e = itemStream.forEach(function(OrderItem value) {
+        check itemStream.forEach(function(OrderItem value) {
             OrderItem orderItem = <OrderItem> value;
             InventoryItem? inventoryItem = itemList[orderItem.itemId];
             if (inventoryItem is InventoryItem) {

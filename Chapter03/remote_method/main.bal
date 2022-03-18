@@ -1,5 +1,5 @@
 // This is example demostration of how to use remote functions
-// Execute the sample with `bal run method/` command
+// Execute the sample with `bal run remote_method/` command
 
 // seperate class in to another file
 import ballerina/io;

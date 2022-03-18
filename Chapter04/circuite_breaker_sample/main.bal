@@ -1,5 +1,5 @@
 // This example demostrate circuite braker design pattern
-// Execute example with bal run circuite_breaker_sample/
+// Execute example with `bal run circuite_breaker_sample/`
 
 import ballerina/http;
 import ballerina/io;

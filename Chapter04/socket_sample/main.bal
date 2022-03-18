@@ -5,6 +5,7 @@
 import ballerina/http;
 import ballerina/io;
 import ballerina/websocket;
+import ballerina/lang.value;
 
 map<websocket:Caller> clientConnectionMap = {};
 string clientName = "";
@@ -22,14 +23,23 @@ service /chat on new websocket:Listener(9091) {
         remote function onOpen(websocket:Caller caller) {
             clientConnectionMap[caller.getConnectionId()] = caller;
             caller.setAttribute(NAME, clientName);
-            broadcastMessage(caller.getAttribute(NAME).toString() + " join the conversation");
+            value:Cloneable? callerName = caller.getAttribute(NAME);
+            if callerName is string { 
+                broadcastMessage(callerName + " join the conversation");
+            }
         }
         remote function onTextMessage(websocket:Caller caller, string text) {
-            broadcastMessage(caller.getAttribute(NAME).toString() + ": " + text);
+            value:Cloneable? callerName = caller.getAttribute(NAME);
+            if callerName is string { 
+                broadcastMessage(callerName + ": " + text);
+            }
         }
         remote function onClose(websocket:Caller caller, int statusCode, string reason) {
             _ = clientConnectionMap.remove(caller.getConnectionId());
-            broadcastMessage(caller.getAttribute(NAME).toString() + " left the conversation");
+            value:Cloneable? callerName = caller.getAttribute(NAME);
+            if callerName is string { 
+                broadcastMessage(callerName + " left the conversation");
+            }
         }
      };
    }

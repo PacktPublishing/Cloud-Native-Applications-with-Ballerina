@@ -6,6 +6,7 @@ info:
 paths:
   /customer:
     post:
+      operationId: "createCustomer"
       responses:
         '200':
           description: OK
@@ -13,6 +14,7 @@ paths:
           description: Internal Error
   /customer/{customerId}:
     get:
+      operationId: "getCustomerById"
       summary: Returns a customer by ID.
       parameters:
         - name: customerId
