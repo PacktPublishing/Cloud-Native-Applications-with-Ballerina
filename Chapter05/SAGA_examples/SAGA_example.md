@@ -5,7 +5,7 @@ Start the Order handler with `bal run order_handler/`
 Start the Orchestrator with `bal run orchestrator_handler/`
 Start Inventory handler with `bal run inventory_handler/`
 Add new order with the following curl
-curl -X POST  http://localhost:9090/OrderAPI/addNewOrder  -d '{"shippingAddress": "225, Rose St, New York", "customerId": "<customer_id>"}'
+curl -X POST  http://localhost:9090/OrderAPI/order  -d '{"shippingAddress": "225, Rose St, New York", "customerId": "<customer_id>"}'
 Add product to order with the following curl
 curl -X POST  http://localhost:9090/OrderAPI/addProductToOrder  -d '{"orderId": "<orderId>", "inventoryItemId": "<inventory_item_id>", "quantity":10}'
 Add item to a product with the following curl

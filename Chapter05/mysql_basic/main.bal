@@ -8,12 +8,11 @@ string dbUser = "root";
 string dbPassword = "root";
 
 function initializeDB(mysql:Client mysqlClient) returns sql:Error? {
-    sql:ExecutionResult result =
-        check mysqlClient->execute("CREATE DATABASE IF NOT EXISTS OMS_BALLERINA");
+    _ = check mysqlClient->execute(`CREATE DATABASE IF NOT EXISTS OMS_BALLERINA`);
 }
 public function main() returns error? {
     mysql:Client mysqlClient = check new (user = dbUser, password = dbPassword, host = "localhost", port = 3306);
-    sql:Error? dbError = initializeDB(mysqlClient);
+    check initializeDB(mysqlClient);
     check mysqlClient.close();
     io:println("MySQL Client initialization for querying data successed!");
     

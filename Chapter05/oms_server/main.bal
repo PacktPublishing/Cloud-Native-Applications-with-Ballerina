@@ -1,14 +1,14 @@
 // Start the service with `bal run oms_server/`
 // Add new customer with the following curl
-// curl -X POST  http://localhost:9090/OrderAPI/addCustomer  -d '{"firstName": "Tim", "lastName": "Wilson", "shippingAddress": "New York", "billingAddress": "New York", "email": "tim@mail.com", "country": "USA"}'
+// curl -X POST  http://localhost:9090/OrderAPI/customer  -d '{"firstName": "Tim", "lastName": "Wilson", "shippingAddress": "New York", "billingAddress": "New York", "email": "tim@mail.com", "country": "USA"}'
 // Add new order with the following curl
-// curl -X POST  http://localhost:9090/OrderAPI/addNewOrder  -d '{"shippingAddress": "225, Rose St, New York", "customerId": "<customer_id>"}'
+// curl -X POST  http://localhost:9090/OrderAPI/order  -d '{"shippingAddress": "225, Rose St, New York", "customerId": "<customer_id>"}'
 // Add new supplier with the following curl
-// curl -X POST  http://localhost:9090/OrderAPI/addSupplier  -d '{"supplierName": "ABC textiles"}'
+// curl -X POST  http://localhost:9090/OrderAPI/supplier  -d '{"supplierName": "ABC textiles"}'
 // Add new product with the following curl
-// curl -X POST  http://localhost:9090/OrderAPI/addProduct  -d '{"productName": "T shirt", "supplierId": "<supplier_id>", "price":50}'
+// curl -X POST  http://localhost:9090/OrderAPI/product  -d '{"productName": "T shirt", "supplierId": "<supplier_id>", "price":50}'
 // Add new inventry with the following curl
-// curl -X POST  http://localhost:9090/OrderAPI/addInventory  -d '{"inventryName": "ABC invetries", "supplierId": "<supplier_id>"}'
+// curl -X POST  http://localhost:9090/OrderAPI/inventory  -d '{"inventryName": "ABC invetries", "supplierId": "<supplier_id>"}'
 // Add product to InventoryItem with the following curl
 // curl -X POST  http://localhost:9090/OrderAPI/addProductToInventory  -d '{"inventoryId": "<inventory_id>", "productId": "<product_id>", "quantity":100}'
 // Add product to order with the following curl
@@ -27,7 +27,7 @@ const dbPassword = "root";
 const jdbcUrl = "jdbc:mysql://localhost:3306/OMS_BALLERINA";
 
 service /OrderAPI  on new http:Listener(9090) { 
-    resource function post addNewOrder(@http:Payload json orderDetails) returns json|http:InternalServerError { 
+    resource function post 'order(@http:Payload json orderDetails) returns json|http:InternalServerError { 
         do {
             json shippingAddress = check orderDetails.shippingAddress;
             json customerId = check orderDetails.customerId;
@@ -154,10 +154,10 @@ public function reserveOrderItems(OrderItemTable orderItems) returns error?{
     foreach OrderItem item in orderItems {
         string inventoryItemId = item.inventoryItemId;
         int quantity = item.quantity;
-        sql:ExecutionResult result = check jdbcClient->execute(`UPDATE InventoryItems SET Quantity = Quantity - ${quantity} WHERE 
+        _  = check jdbcClient->execute(`UPDATE InventoryItems SET Quantity = Quantity - ${quantity} WHERE 
         InventoryItemId = ${inventoryItemId}`);
         string pendingOrderId = uuid:createType1AsString();
-        result = check jdbcClient->execute(`INSERT INTO PendingOrderItems(PendingOrderItemId, OrderId, InventoryItemId, Quantity) VALUES 
+        _ = check jdbcClient->execute(`INSERT INTO PendingOrderItems(PendingOrderItemId, OrderId, InventoryItemId, Quantity) VALUES 
         (${pendingOrderId}, ${item.orderId}, ${inventoryItemId}, ${quantity})`);
     }
     check jdbcClient.close();
@@ -167,7 +167,7 @@ public function reserveOrderItems(OrderItemTable orderItems) returns error?{
 function setOrderStatus(string orderId, string status) returns error? {
     jdbc:Client jdbcClient = check new (jdbcUrl, dbUser, dbPassword);
     sql:ParameterizedQuery updateOrder = `UPDATE Orders SET Status = ${status} WHERE OrderId = ${orderId}`; 
-    sql:ExecutionResult result = check jdbcClient->execute(updateOrder);
+    _ = check jdbcClient->execute(updateOrder);
     check jdbcClient.close();
 }
 
@@ -177,7 +177,7 @@ function createOrder(string shippingAddress, string customerId) returns error|st
     sql:ParameterizedQuery createOrder = `INSERT INTO OMS_BALLERINA.Orders( 
         OrderId, ShippingAddress, CustomerId, Status)  
         VALUES(${orderId}, ${shippingAddress}, ${customerId}, 'Created')`; 
-    sql:ExecutionResult result = check jdbcClient->execute(createOrder); 
+    _ = check jdbcClient->execute(createOrder); 
     check jdbcClient.close();
     return orderId;
 }
@@ -188,7 +188,7 @@ function addProduct(string productName, string supplierId, float price) returns 
     sql:ParameterizedQuery createProduct = `INSERT INTO OMS_BALLERINA.Products( 
         ProductId, ProductName, Price, SupplierId)  
         VALUES(${productId}, ${productName}, ${price}, ${supplierId})`; 
-    sql:ExecutionResult result = check jdbcClient->execute(createProduct); 
+    _ = check jdbcClient->execute(createProduct); 
     check jdbcClient.close();
     return productId;
 }
@@ -199,7 +199,7 @@ function addSupplier(string supplierName) returns error|string{
     sql:ParameterizedQuery createProduct = `INSERT INTO OMS_BALLERINA.Suppliers( 
         SupplierId, SupplierName)  
         VALUES(${supplierId}, ${supplierName})`; 
-    sql:ExecutionResult result = check jdbcClient->execute(createProduct); 
+    _ = check jdbcClient->execute(createProduct); 
     check jdbcClient.close();
     return supplierId;
 }
@@ -210,7 +210,7 @@ function addInventory(string inventryName, string supplierId) returns error|stri
     sql:ParameterizedQuery createProduct = `INSERT INTO OMS_BALLERINA.Inventories( 
         InventoryId, Name, SupplierId)  
         VALUES(${InventryId}, ${inventryName}, ${supplierId})`; 
-    sql:ExecutionResult result = check jdbcClient->execute(createProduct); 
+    _ = check jdbcClient->execute(createProduct); 
     check jdbcClient.close();
     return InventryId;
 }
@@ -223,7 +223,7 @@ function addCustomer(string firstName, string lastName, string shippingAddress,
         CustomerId, FirstName, LastName, ShippingAddress, BillingAddress, Email, Country)  
         VALUES(${customerId}, ${firstName}, ${lastName}, ${shippingAddress}, ${billingAddress}, 
             ${email}, ${country})`; 
-    sql:ExecutionResult result = check jdbcClient->execute(createProduct); 
+    _ = check jdbcClient->execute(createProduct); 
     check jdbcClient.close();
     return customerId;
 }
@@ -234,7 +234,7 @@ function addProductToInventory(string inventoryId, string productId, int quantit
         sql:ParameterizedQuery addProduct = `INSERT INTO OMS_BALLERINA.InventoryItems( 
         InventoryItemId, InventoryId, ProductId, Quantity)  
         VALUES(${inventoryItemId}, ${inventoryId},${productId}, ${quantity})`; 
-    sql:ExecutionResult result = check jdbcClient->execute(addProduct); 
+    _ = check jdbcClient->execute(addProduct); 
     check jdbcClient.close();
     return inventoryItemId;
 }
@@ -245,17 +245,16 @@ function addProductToOrder(string orderId, string inventoryItemId, int quantity)
         sql:ParameterizedQuery addProduct = `INSERT INTO OMS_BALLERINA.OrderItems( 
         OrderItemId, OrderId, Quantity, InventoryItemId)  
         VALUES(${orderItemId}, ${orderId}, ${quantity}, ${inventoryItemId})`; 
-    sql:ExecutionResult result = check jdbcClient->execute(addProduct); 
+    _ = check jdbcClient->execute(addProduct); 
     check jdbcClient.close();
     return orderItemId;
 }
 
 public function getOrderItemTableByOrderId(string orderId) returns OrderItemTable|error {
     jdbc:Client jdbcClient = check new (jdbcUrl, dbUser, dbPassword);
-    stream<record{}, error> resultStream = jdbcClient->query(`SELECT * FROM OrderItems WHERE OrderId=${orderId}`, OrderItem);
-    stream<OrderItem, sql:Error> orderItemStream = <stream<OrderItem, sql:Error>>resultStream;
+    stream<OrderItem, sql:Error?> orderItemStream = jdbcClient->query(`SELECT * FROM OrderItems WHERE OrderId=${orderId}`, OrderItem);
     OrderItemTable orderItemTable = table [];
-    error? e = orderItemStream.forEach(function(OrderItem orderItem) {
+    check orderItemStream.forEach(function(OrderItem orderItem) {
         orderItemTable.put(orderItem);
     });
     check jdbcClient.close();
@@ -264,7 +263,7 @@ public function getOrderItemTableByOrderId(string orderId) returns OrderItemTabl
 
 function getAvailableProductQuantity(string inventoryItemId) returns int|error {
     jdbc:Client jdbcClient = check new (jdbcUrl, dbUser, dbPassword);
-    stream<record{}, error> resultStream = jdbcClient->query(`SELECT Quantity FROM InventoryItems WHERE 
+    stream<record{}, sql:Error?> resultStream = jdbcClient->query(`SELECT Quantity FROM InventoryItems WHERE 
     InventoryItemId = ${inventoryItemId}`);
     record {|record {} value;|}? result = check resultStream.next();
     if (result is record {|record {} value;|}) {

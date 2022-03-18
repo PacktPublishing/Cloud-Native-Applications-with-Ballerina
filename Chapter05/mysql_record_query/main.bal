@@ -8,12 +8,8 @@ string dbUser = "root";
 string dbPassword = "root";
 function initializeDB(mysql:Client mysqlClient) returns sql:Error? {
     sql:ExecutionResult result =
-        check mysqlClient->execute("CREATE DATABASE IF NOT EXISTS OMS_BALLERINA");
-        result = check mysqlClient->execute("CREATE TABLE IF NOT EXISTS " +
-        "OMS_BALLERINA.CustomersTable(CustomerId INTEGER NOT NULL AUTO_INCREMENT, " +
-        "FirstName  VARCHAR(300), LastName VARCHAR(300), " +
-        "ShippingAddress VARCHAR(500), BillingAddress VARCHAR(500), " +
-        "Email VARCHAR(300), Country  VARCHAR(300), PRIMARY KEY (CustomerId))");
+        check mysqlClient->execute(`CREATE DATABASE IF NOT EXISTS OMS_BALLERINA`);
+        result = check mysqlClient->execute(`CREATE TABLE IF NOT EXISTS OMS_BALLERINA.CustomersTable(CustomerId INTEGER NOT NULL AUTO_INCREMENT, FirstName  VARCHAR(300), LastName VARCHAR(300), ShippingAddress VARCHAR(500), BillingAddress VARCHAR(500), Email VARCHAR(300), Country  VARCHAR(300), PRIMARY KEY (CustomerId))`);
 }
 type Customer record {|
     int customerId?;
@@ -25,10 +21,8 @@ type Customer record {|
     string country;
 |};
 function readData(mysql:Client mysqlClient) returns error? {
-    stream<record{}, error> resultStream =
-        mysqlClient->query("Select * from OMS_BALLERINA.CustomersTable", Customer);
-        stream<Customer, sql:Error> customerStream =
-        <stream<Customer, sql:Error>>resultStream;
+    stream<Customer, sql:Error?> customerStream =
+        mysqlClient->query(`Select * from OMS_BALLERINA.CustomersTable`, Customer);
     error? e = customerStream.forEach(function(Customer customer) {
         io:println("Customer first name " + customer.firstName);
         io:println("Customer last name " + customer.lastName);

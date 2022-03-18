@@ -18,8 +18,7 @@ public class InventoryRepository {
         }
     }
     public function getInventoryItemTableByinventoryId(int inventoryId) returns @untainted InventoryItemTable|error {
-        stream<record{}, error> resultStream = self.jdbcClient->query(`SELECT * FROM InventoryItems WHERE InventoryId=${inventoryId}`, InventoryItem);
-        stream<InventoryItem, sql:Error> inventoryStream = <stream<InventoryItem, sql:Error>>resultStream;
+        stream<InventoryItem, sql:Error?>  inventoryStream = self.jdbcClient->query(`SELECT * FROM InventoryItems WHERE InventoryId=${inventoryId}`, InventoryItem);
         InventoryItemTable inventoryItemTable = table [];
         error? e = inventoryStream.forEach(function(InventoryItem product) {
             inventoryItemTable.put(product);
@@ -30,7 +29,7 @@ public class InventoryRepository {
         return inventoryItemTable;
     }
     public function getAvailableProductQuantity(string inventoryItemId) returns @untainted int|error {
-        stream<record{}, error> resultStream = self.jdbcClient->query(`SELECT Quantity FROM InventoryItems WHERE 
+        stream<record{}, sql:Error?> resultStream = self.jdbcClient->query(`SELECT Quantity FROM InventoryItems WHERE 
         InventoryItemId = ${inventoryItemId}`);
         record {|record {} value;|}? result = check resultStream.next();
         if (result is record {|record {} value;|}) {
@@ -44,10 +43,10 @@ public class InventoryRepository {
             string orderId = <string> check item.orderId;
             string inventoryItemId = <string> check item.inventoryItemId;
             int quantity = <int> check item.quantity;
-            sql:ExecutionResult result = check self.jdbcClient->execute(`UPDATE InventoryItems SET Quantity = Quantity - ${quantity} WHERE 
+            _ = check self.jdbcClient->execute(`UPDATE InventoryItems SET Quantity = Quantity - ${quantity} WHERE 
             InventoryItemId = ${inventoryItemId}`);
             string pendingOrderId = uuid:createType1AsString();
-            result = check self.jdbcClient->execute(`INSERT INTO PendingOrderItems(PendingOrderItemId, OrderId, InventoryItemId, Quantity) VALUES 
+            _ = check self.jdbcClient->execute(`INSERT INTO PendingOrderItems(PendingOrderItemId, OrderId, InventoryItemId, Quantity) VALUES 
             (${pendingOrderId}, ${orderId}, ${inventoryItemId}, ${quantity})`);
         }
         return;

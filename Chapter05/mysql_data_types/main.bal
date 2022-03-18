@@ -10,21 +10,14 @@ string dbUser = "root";
 string dbPassword = "root";
 
 function initializeDB(mysql:Client mysqlClient) returns sql:Error? {
-    sql:ExecutionResult result =
-        check mysqlClient->execute("CREATE DATABASE IF NOT EXISTS OMS_BALLERINA");
+    _ =
+        check mysqlClient->execute(`CREATE DATABASE IF NOT EXISTS OMS_BALLERINA`);
         // Insert time value data
-        result = check mysqlClient->execute("CREATE TABLE OMS_BALLERINA.DatetimeTable (ID int(11) NOT NULL," + 
-        " Date date DEFAULT NULL, Time time(6) DEFAULT NULL, Datetime datetime DEFAULT NULL, " + 
-        " Timestamp timestamp NULL DEFAULT NULL, PRIMARY KEY (ID) ) " +
-        "ENGINE=InnoDB DEFAULT CHARSET=utf8;");
-        result = check mysqlClient->execute("INSERT INTO OMS_BALLERINA.DatetimeTable(" +
-        "ID, Date, Time, Datetime, Timestamp) " +
-        "VALUES(1, CURDATE(), CURRENT_TIME(), now(), now())");
+        _ = check mysqlClient->execute(`CREATE TABLE OMS_BALLERINA.DatetimeTable (ID int(11) NOT NULL, Date date DEFAULT NULL, Time time(6) DEFAULT NULL, Datetime datetime DEFAULT NULL,  Timestamp timestamp NULL DEFAULT NULL, PRIMARY KEY (ID) ) ENGINE=InnoDB DEFAULT CHARSET=utf8;`);
+        _ = check mysqlClient->execute(`INSERT INTO OMS_BALLERINA.DatetimeTable(ID, Date, Time, Datetime, Timestamp) VALUES(1, CURDATE(), CURRENT_TIME(), now(), now())`);
         // insert blob value data
-        result = check mysqlClient->execute("CREATE TABLE OMS_BALLERINA.BlobTable(ID INT NOT NULL," +
-        "BlobValue BLOB NULL, PRIMARY KEY (id)); ");
-        result = check mysqlClient->execute("INSERT INTO OMS_BALLERINA.BlobTable(id, BlobValue) VALUES " +
-        "(1, b'01101000011001010110110001101100');");
+        _ = check mysqlClient->execute(`CREATE TABLE OMS_BALLERINA.BlobTable(ID INT NOT NULL, BlobValue BLOB NULL, PRIMARY KEY (id)); `);
+        _ = check mysqlClient->execute(`INSERT INTO OMS_BALLERINA.BlobTable(id, BlobValue) VALUES (1, b'01101000011001010110110001101100');`);
 }
 type TimeTable record {| 
     int id; 
@@ -34,10 +27,8 @@ type TimeTable record {|
     time:Utc timestamp; 
 |}; 
 function readDataTime(mysql:Client mysqlClient) returns error? {
-    stream<record{}, error> resultStream =
-        mysqlClient->query("Select * from OMS_BALLERINA.DatetimeTable", TimeTable);
-        stream<TimeTable, sql:Error> timeStream =
-        <stream<TimeTable, sql:Error>>resultStream;
+    stream<TimeTable, sql:Error?> timeStream =
+        mysqlClient->query(`Select * from OMS_BALLERINA.DatetimeTable`, TimeTable);
     error? e = timeStream.forEach(function(TimeTable timeTable) {
         io:println("Time data " + timeTable.toString());
     });
@@ -53,10 +44,8 @@ type BlobTable record {|
     byte[] blobValue; 
 |}; 
 function readDataBlob(mysql:Client mysqlClient) returns error? {
-    stream<record{}, error> resultStream =
-        mysqlClient->query("Select * from OMS_BALLERINA.BlobTable", BlobTable);
-        stream<BlobTable, sql:Error> blobStream =
-        <stream<BlobTable, sql:Error>>resultStream;
+    stream<BlobTable, sql:Error?> blobStream=
+        mysqlClient->query(`Select * from OMS_BALLERINA.BlobTable`, BlobTable);
     error? e = blobStream.forEach(function(BlobTable blobTable) {
         io:println("Blob data " + blobTable.toString());
     });

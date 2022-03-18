@@ -28,6 +28,9 @@ public class OrderAggregate {
     public function getOrderId() returns string {
         return self.'order.orderId;
     }
+    public function getEntityId() returns string{
+        return self.entityId;
+    }
     public function addProductToOrder(string inventoryItemId, int quantity, function (Event) returns error? eventHandler) returns error|string{
         io:println("Add new product to order");
         string orderItemId = uuid:createType1AsString();
@@ -73,7 +76,7 @@ public class OrderAggregate {
                 json orderItemJson = check event.eventData.fromJsonString();
                 OrderItem orderItem = check orderItemJson.cloneWithType(OrderItem);
                 if self.orderItems.hasKey(orderItem.orderItemId) {
-                    OrderItem item = self.orderItems.remove(orderItem.orderItemId);
+                    _ = self.orderItems.remove(orderItem.orderItemId);
                 }
                 self.orderItems.add(orderItem);
             }

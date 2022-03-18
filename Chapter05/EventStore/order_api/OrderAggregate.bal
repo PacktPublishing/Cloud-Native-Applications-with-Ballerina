@@ -76,7 +76,7 @@ public class OrderAggregate {
                 json orderItemJson = check event.eventData.fromJsonString();
                 OrderItem orderItem = check orderItemJson.cloneWithType(OrderItem);
                 if self.orderItems.hasKey(orderItem.orderItemId) {
-                    OrderItem item = self.orderItems.remove(orderItem.orderItemId);
+                    _ = self.orderItems.remove(orderItem.orderItemId);
                 }
                 self.orderItems.add(orderItem);
             }

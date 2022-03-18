@@ -2,7 +2,7 @@ import ballerinax/rabbitmq;
 import ballerina/http;
 
 service /OrderAPI  on new http:Listener(9090) { 
-    resource function post addNewOrder(http:Caller caller, http:Request req, @http:Payload json orderDetails) returns error? { 
+    resource function post 'order(http:Caller caller, http:Request req, @http:Payload json orderDetails) returns error? { 
         OrderRepository orderRepository = check new();
         json shippingAddress = check orderDetails.shippingAddress;
         json customerId = check orderDetails.customerId;

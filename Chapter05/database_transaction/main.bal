@@ -1,3 +1,5 @@
+// ----Ballerina database samples -------
+// Run this sample with `bal run database_transaction/` command
 
 import ballerina/io;
 import ballerinax/mysql;
@@ -7,8 +9,7 @@ string dbUser = "root";
 string dbPassword = "root";
 
 function initializeDB(mysql:Client mysqlClient) returns sql:Error? {
-    sql:ExecutionResult result =
-        check mysqlClient->execute("CREATE DATABASE IF NOT EXISTS OMS_BALLERINA");
+    _ = check mysqlClient->execute(`CREATE DATABASE IF NOT EXISTS OMS_BALLERINA`);
 }
 public function main() returns error? {
         mysql:Client|sql:Error mysqlClient = 
@@ -19,7 +20,7 @@ public function main() returns error? {
         io:println(mysqlClient);
     } else {
         transaction {
-            sql:Error? dbError = check initializeDB(mysqlClient);
+            check initializeDB(mysqlClient);
             check commit;
         }
         io:println("MySQL Client initialization for querying data successed!");
