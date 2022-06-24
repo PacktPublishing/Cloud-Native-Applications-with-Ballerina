@@ -12,7 +12,7 @@ public function main() {
         io:println("Error while parsing time", decodedTime); 
     } 
     time:Utc|error decodederrorTime = time:utcFromString("2007-12-l3T10:15:30.00Z");
-    if decodedTime is time:Utc {
+    if decodederrorTime is time:Utc {
         io:println("The parsed time is ", decodederrorTime); 
     } else { 
         io:println("Error while parsing time", decodederrorTime); 
