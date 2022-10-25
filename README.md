@@ -67,3 +67,7 @@ We also provide a PDF file that has color images of the screenshots/diagrams use
 **Dhanushka Madushan**
 is a Senior Software Engineer working at WS02. He has more than 4 years of experience in developing software solutions for Cloud based platforms in different business domains. He has worked on the WSO2 integration platform for 2+ years and responsible for building and maintaining ESB and Microintegrator products. Dhanushka has been a part of many projects.
 
+### Download a free PDF
+
+ <i>If you have already purchased a print or Kindle version of this book, you can get a DRM-free PDF version at no cost.<br>Simply click on the link to claim your free PDF.</i>
+<p align="center"> <a href="https://packt.link/free-ebook/9781800200630">https://packt.link/free-ebook/9781800200630 </a> </p>
